@@ -2,7 +2,11 @@ export type TableComponentProps = {
     columnDefs: TypeColumnDefs[];
     rowData: TypeRowData[];
     pageCount: number;
-    handlePagination: (selectedPage: number) => void;
+    handlePagination: (selectedItem: TypeSelectedPagination) => void;
+};
+
+export type TypeSelectedPagination = {
+    selected: number
 };
 
 export type TypeTableComponentConfig = {

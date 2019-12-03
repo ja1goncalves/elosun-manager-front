@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TypeTableComponentConfig } from '../../components/table/table-types';
+import { TypeTableComponentConfig, TypeSelectedPagination } from '../../components/table/table-types';
 import { TableComponent } from '../../components/table';
 
 export default () => {
@@ -22,9 +22,9 @@ export default () => {
         });
     }, []);
 
-    const handlePagination = (selectedPage: number): void => {
+    const handlePagination = ({ selected }: TypeSelectedPagination): void => {
         // TODO: Adicionar requisição para coletar os dados da tabela
-        console.log('selectedPage: ', selectedPage);
+        console.log('selectedPage: ', selected);
     }
 
     return (
