@@ -2,25 +2,19 @@ import React from 'react';
 import './App.css';
 import theme from './App-theme';
 import { ThemeProvider } from 'styled-components';
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import { HeaderComponent } from '../../components/header';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import { HomePage } from '../home';
-import { AnaelPage } from '../anael';
-import { PurchaserPage } from '../purchasers';
-import { SellerPage } from '../sellers';
+import AuthRoute from '../../utils/auth';
+import { MainPage } from '../main';
+import { LoginPage } from '../login';
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <HeaderComponent />
         <Switch>
-          <Route exact path='/' render={() => <Redirect to='/home' />} />
-          <Route path='/home' component={HomePage} />
-          <Route path='/anael' component={AnaelPage} />
-          <Route path='/purchasers' component={PurchaserPage} />
-          <Route path='/sellers' component={SellerPage} />
+          <Route exact path='/login' component={LoginPage} />
+          <AuthRoute redirectTo="/login" path="/" component={MainPage} />
         </Switch>
       </Router>
     </ThemeProvider>
