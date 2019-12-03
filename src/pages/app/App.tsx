@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import theme from './App-theme';
 import { ThemeProvider } from 'styled-components';

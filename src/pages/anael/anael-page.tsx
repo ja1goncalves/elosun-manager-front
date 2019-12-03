@@ -22,13 +22,13 @@ export default () => {
         });
     }, []);
 
-    const handlePagination = (selectedPage: number) => {
+    const handlePagination = (selectedPage: number): void => {
         // TODO: Adicionar requisição para coletar os dados da tabela
         console.log('selectedPage: ', selectedPage);
     }
 
     return (
-        <div style={{ height: '200vh' }} className="container">
+        <div className="container">
             <div className="row w-100">
                 <div className="row w-100">
                     <h4>Listagem de fornecedores da anael</h4>
