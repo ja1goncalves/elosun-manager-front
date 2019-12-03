@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
     position: sticky;
+    z-index: 1;
     top: 0;
     height: 50px;
     background-color: ${({ theme }) => theme.blue.terciaryColor};
