@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
-    position: sticky;
-    z-index: 1;
-    top: 0;
-    height: 50px;
+    height: 100vh;
     background-color: ${({ theme }) => theme.blue.terciaryColor};
+    width: 15%;
     color: #fff;
 
     ul, li {
@@ -18,8 +16,5 @@ export const StyledHeader = styled.header`
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
-    }
-    li {
-        float: left;
     }
 `;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TypeTableComponentConfig, TypeSelectedPagination } from '../../components/table/table-types';
 import { TableComponent } from '../../components/table';
+import { StyledCard } from '../../components/page-card';
 
 export default () => {
     const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ columnDefs: [], rowData: [], pageCount: 0 });
@@ -28,8 +29,8 @@ export default () => {
     }
 
     return (
-        <div className="container">
-            <div className="row w-100">
+        <>
+            <StyledCard className="row w-100">
                 <div className="row w-100">
                     <h4>Listagem de fornecedores da anael</h4>
                 </div>
@@ -44,7 +45,7 @@ export default () => {
                         handlePagination={handlePagination}
                     />
                 </div>
-            </div>
-        </div>
+            </StyledCard>
+        </>
     )
 }

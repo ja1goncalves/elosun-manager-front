@@ -1,13 +1,15 @@
 import React from 'react';
 import { NavLinkComponentProps } from './nav-link-types';
 import { StyledNavLink } from './nav-link-styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default ({ routeName, toUrl }: NavLinkComponentProps) => (
-    <li className="col-2">
+export default ({ routeName, toUrl, icon }: NavLinkComponentProps) => (
+    <li className="row w-100 d-flex justify-content-start align-items-center flex-row p-2 mx-0">
         <StyledNavLink
             activeClassName="active"
-            className="d-flex align-items-center justify-content-center w-100 h-100" 
+            className="w-100 h-100" 
             to={toUrl}>
+            <FontAwesomeIcon className="mr-3" icon={icon} />
             {routeName}
         </StyledNavLink>
     </li>
