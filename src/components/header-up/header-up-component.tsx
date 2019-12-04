@@ -6,13 +6,15 @@ import { Redirect } from 'react-router';
 
 export default () => {
     const [goToLogin, setGoToLogin] = useState<boolean>(false);
+    const [openSideMenu, setOpenSideMenu] = useState<boolean>(false);
     const logoffUser = () => {
         localStorage.removeItem('auth');
         setGoToLogin(true);
     }
 
-    const openMenu = () => {
+    const openSidebarMenu = () => {
         console.log('abre o menu')
+        setOpenSideMenu(true);
     }
 
     return (
@@ -23,7 +25,7 @@ export default () => {
                     style={{ fontSize: '2rem', cursor: 'pointer' }}
                     className="d-flex d-lg-none"
                     icon={faAlignJustify}
-                    onClick={openMenu} />
+                    onClick={openSidebarMenu} />
                 <StyledLogOffButton
                     className="d-none d-lg-flex justify-content-center align-items-center p-3"
                     title="Sair"
