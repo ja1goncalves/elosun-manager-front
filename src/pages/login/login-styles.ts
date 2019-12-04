@@ -6,9 +6,10 @@ export const StyledLoginPage = styled.div`
     height: 100vh;
 `;
 
-export const StyledLoginForm = styled.form`
+export const StyledLoginBox = styled.div`
     border-radius: 5px;
     min-width: 300px;
+    height: 350px;
     background-color: #fff;
     padding: 20px;
 `;

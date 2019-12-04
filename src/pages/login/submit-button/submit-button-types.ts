@@ -1,3 +1,3 @@
 export type SubmitButtonProps = {
-    loading?: boolean;
+    isLoading?: boolean;
 }

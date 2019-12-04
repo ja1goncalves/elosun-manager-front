@@ -7,10 +7,15 @@ export const StyledSubmitButton = styled.button<SubmitButtonProps>`
     color: #fff;
     padding: 8px 20px;
     border-radius: 5px;
-    ${({ loading }) => loading &&
+    cursor: pointer;
+    ${({ isLoading }) => isLoading &&
         css`
             user-select: none;
             opacity: 0.8;
+            cursor: not-allowed !important;
         `
+    }
+    :focus {
+        outline: none;
     }
 `;

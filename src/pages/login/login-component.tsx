@@ -1,62 +1,62 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { StyledLoginPage, StyledLoginForm } from './login-styles';
-import { FormFieldset } from './fieldset';
-import { formValidations } from './login-validations';
-import { Formik } from 'formik';
-import { TypeLoginFormik } from './login-types';
-import { StyledSubmitButton } from './submit-button';
+import { StyledLoginPage, StyledLoginBox } from './login-styles';
+import { LoginForm } from './login-form';
+import { TypeLoginFormik } from './login-form/login-form-types';
+import { TypeSelectedForm } from './login-types';
+import { TypeForgotPasswordFormik } from './forgot-password/forgot-password-types';
+import { ForgotPasswordForm } from './forgot-password';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
     const [logged, setLogged] = useState<boolean>(false);
-    const [initialFormikValues] = useState<TypeLoginFormik>({
-        login: '',
-        password: ''
-    });
+    const [selectedForm, setSelectedForm] = useState<TypeSelectedForm>('login');
 
-    const handleSubmit = (formik: TypeLoginFormik) => {
+    // TODO: Adicionar requisição para se logar
+    const handleLoginSubmit = (formik: TypeLoginFormik) => {
         console.log('formik: ', formik);
-        // localStorage.setItem('auth', '213rsdzcr44cv4vtrrtdf');
-        // setLogged(true);
+        setLoadingSubmit(true);
+        localStorage.setItem('auth', '213rsdzcr44cv4vtrrtdf');
+        setLogged(true);
+    }
+
+    // TODO: Adicionar requisição para recuperar a senha
+    const handleForgotPasswordSubmit = (formik: TypeForgotPasswordFormik) => {
+        console.log('formik: ', formik);
+        setLoadingSubmit(true);
     }
 
     return (
         <StyledLoginPage className="d-flex justify-content-center align-items-center">
             {logged && <Redirect to="/home" />}
 
-
-            <Formik initialValues={initialFormikValues} onSubmit={handleSubmit} validationSchema={formValidations}>
-                {({ handleChange, handleSubmit, values, errors, submitCount }) => (
-                <StyledLoginForm onSubmit={handleSubmit} className="d-flex justify-content-center flex-column text-center">
-                    <h1 className="mb-4 mt-3">Elosun</h1>
-                    <FormFieldset
-                        id="login"
-                        type="text"
-                        name="login"
-                        placeholder="Nome de usuário"
-                        value={values.login}
-                        error={Boolean(errors.login)}
-                        showError={Boolean(submitCount)}
-                        onChange={handleChange}
-                        />
-                    <FormFieldset
-                        id="password"
-                        type="password"
-                        name="password"
-                        placeholder="Senha"
-                        value={values.password}
-                        error={Boolean(errors.password)}
-                        showError={Boolean(submitCount)}
-                        onChange={handleChange}
-                        />
-                    <StyledSubmitButton loading={loadingSubmit} type="submit">
-                        {loadingSubmit ? '...Carregando' : 'Acessar'}
-                    </StyledSubmitButton>
-                    <a className="mt-4" href="#">Esqueci a senha</a>
-                </StyledLoginForm>
+            <StyledLoginBox className="d-flex justify-content-center flex-column text-center">
+                <h1 className="mb-4 mt-3">Elosun</h1>
+                {selectedForm === 'login' && (
+                    <>
+                        <LoginForm
+                            handleLoginSubmit={handleLoginSubmit}
+                            loadingSubmit={loadingSubmit}
+                            />
+                        <a
+                            className="m-0 mt-auto justify-self-end"
+                            href="#"
+                            onClick={() => setSelectedForm('forgotpassword')}>Esqueci a senha</a>
+                    </>
                 )}
-            </Formik>
+                {selectedForm === 'forgotpassword' && (
+                    <>
+                        <ForgotPasswordForm
+                            handleForgotPasswordSubmit={handleForgotPasswordSubmit}
+                            loadingSubmit={loadingSubmit}
+                            />
+                        <a
+                            className="m-0 mt-auto justify-self-end"
+                            href="#"
+                            onClick={() => setSelectedForm('login')}>Tem um cadastro? entre na sua conta</a>
+                    </>
+                )}
+            </StyledLoginBox>
         </StyledLoginPage>
     )
 }

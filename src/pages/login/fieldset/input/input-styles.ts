@@ -8,4 +8,7 @@ export const StyledInputForm = styled.input<TypeInputForm>`
             border-color: red;
         `
     }
+    :focus {
+        outline: none;
+    }
 `;

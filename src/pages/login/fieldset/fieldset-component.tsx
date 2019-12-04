@@ -16,8 +16,8 @@ export default ({ type, name, placeholder, label, id, onChange, value, error, sh
             value={value}
             error={error} />
         <FieldCheckComponent invalid={error} show={showError} />
-        <p className="text-danger mb-0">
+        {/* <p className="text-danger mb-0">
             <ErrorMessage name={name} />
-        </p>
+        </p> */}
     </fieldset>
 )

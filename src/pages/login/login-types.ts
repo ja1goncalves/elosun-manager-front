@@ -1,4 +1,1 @@
-export type TypeLoginFormik = {
-    login: string;
-    password: string;
-}
+export type TypeSelectedForm = 'login' | 'forgotpassword';
