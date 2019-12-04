@@ -8,20 +8,21 @@ import { SellerPage } from '../sellers';
 import { HeaderComponentLeft } from '../../components/header';
 import AuthRoute from '../../utils/auth';
 import { HeaderComponentUp } from '../../components/header-up';
+import { StyledPage } from './main-styles';
 
 export default () => (
     <div className="d-flex flex-row">
         <HeaderComponentLeft />
         <section className="container-fluid">
             <HeaderComponentUp />
-            <section className="row container-fluid ml-2">
+            <StyledPage className="row container-fluid overflow-auto">
                 <Switch>
                     <AuthRoute path='/home' component={HomePage} />
                     <AuthRoute path='/anael' component={AnaelPage} />
                     <AuthRoute path='/purchasers' component={PurchaserPage} />
                     <AuthRoute path='/sellers' component={SellerPage} />
                 </Switch>
-            </section>
+            </StyledPage>
         </section>
     </div>
 )
