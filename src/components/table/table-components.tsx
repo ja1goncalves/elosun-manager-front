@@ -22,8 +22,8 @@ export default ({ columnDefs, rowData, pageCount, handlePagination }: TableCompo
                 style={{ flex: 1 }} 
                 className="d-flex justify-content-end">
                 <ReactPaginate
-                    previousLabel={'previous'}
-                    nextLabel={'next'}
+                    previousLabel={'anterior'}
+                    nextLabel={'próximo'}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
                     pageCount={pageCount}

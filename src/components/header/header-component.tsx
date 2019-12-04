@@ -8,7 +8,7 @@ export default () => {
     return (
         <StyledHeader>
             <div className="container-fluid h-100 d-flex flex-column">
-                <nav className="row d-flex justify-content-center mt-2">
+                <nav className="row d-flex justify-content-center mt-2 mb-4">
                     <p
                         style={{ fontSize: '1.6rem' }}
                         className="ml-3 mb-0"
@@ -16,7 +16,7 @@ export default () => {
                         <b>Elo</b>sun
                     </p>
                 </nav>
-                <hr style={{ backgroundColor: '#aaa' }} className="w-100 text-secondary" />
+                {/* <hr style={{ backgroundColor: '#aaa' }} className="w-100 text-secondary" /> */}
                 <aside className="row d-flex align-items-center justify-content-start flex-column">
                     <ProfilePictureComponent imgUrl={require('../../assets/imgs/link.jpg')} />
                     <div className="d-flex flex-column align-items-center mt-2">
