@@ -6,7 +6,7 @@ import { faSolarPanel, faLightbulb, faSeedling, faUser } from '@fortawesome/free
 
 export default () => {
     return (
-        <StyledHeader>
+        <StyledHeader className="d-none d-lg-block">
             <div className="container-fluid h-100 d-flex flex-column">
                 <nav className="row d-flex justify-content-center mt-2 mb-4">
                     <p

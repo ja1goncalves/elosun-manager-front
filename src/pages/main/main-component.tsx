@@ -5,13 +5,13 @@ import { HomePage } from '../home';
 import { AnaelPage } from '../anael';
 import { PurchaserPage } from '../purchasers';
 import { SellerPage } from '../sellers';
-import { HeaderComponent } from '../../components/header';
+import { HeaderComponentLeft } from '../../components/header';
 import AuthRoute from '../../utils/auth';
 import { HeaderComponentUp } from '../../components/header-up';
 
 export default () => (
     <div className="d-flex flex-row">
-        <HeaderComponent />
+        <HeaderComponentLeft />
         <section className="container-fluid">
             <HeaderComponentUp />
             <section className="row container-fluid ml-2">

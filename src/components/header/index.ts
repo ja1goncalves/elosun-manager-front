@@ -1,5 +1,5 @@
-import HeaderComponent from './header-component';
+import HeaderComponentLeft from './header-component';
 
 export {
-    HeaderComponent,
+    HeaderComponentLeft,
 }
