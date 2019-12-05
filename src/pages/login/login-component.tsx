@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { StyledLoginPage, StyledLoginBox } from './login-styles';
+import { StyledLoginPage, StyledLoginBox, StyledParagraphLink } from './login-styles';
 import { LoginForm } from './login-form';
 import { TypeLoginFormik } from './login-form/login-form-types';
 import { TypeSelectedForm } from './login-types';
@@ -38,10 +38,9 @@ export default () => {
                             handleLoginSubmit={handleLoginSubmit}
                             loadingSubmit={loadingSubmit}
                             />
-                        <a
+                        <StyledParagraphLink
                             className="m-0 mt-auto justify-self-end"
-                            href="#"
-                            onClick={() => setSelectedForm('forgotpassword')}>Esqueci a senha</a>
+                            onClick={() => setSelectedForm('forgotpassword')}>Esqueci a senha</StyledParagraphLink>
                     </>
                 )}
                 {selectedForm === 'forgotpassword' && (
@@ -50,10 +49,9 @@ export default () => {
                             handleForgotPasswordSubmit={handleForgotPasswordSubmit}
                             loadingSubmit={loadingSubmit}
                             />
-                        <a
+                        <StyledParagraphLink
                             className="m-0 mt-auto justify-self-end"
-                            href="#"
-                            onClick={() => setSelectedForm('login')}>Tem um cadastro? entre na sua conta</a>
+                            onClick={() => setSelectedForm('login')}>Tem um cadastro? entre na sua conta</StyledParagraphLink>
                     </>
                 )}
             </StyledLoginBox>

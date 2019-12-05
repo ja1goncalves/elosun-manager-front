@@ -3,6 +3,7 @@ import { StyledUpHeader, StyledLogOffButton } from './header-up-styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff, faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import { SidebarComponent } from '../sidebar';
 
 export default () => {
     const [goToLogin, setGoToLogin] = useState<boolean>(false);
@@ -12,9 +13,9 @@ export default () => {
         setGoToLogin(true);
     }
 
-    const openSidebarMenu = () => {
-        console.log('abre o menu')
-        setOpenSideMenu(true);
+    const openSidebarMenu = async () => {
+        await setOpenSideMenu(false);
+        await setOpenSideMenu(true);
     }
 
     return (
@@ -33,6 +34,7 @@ export default () => {
                     <FontAwesomeIcon icon={faPowerOff} />
                 </StyledLogOffButton>
             </StyledUpHeader>
+            <SidebarComponent show={openSideMenu} />
         </>
     )
 }

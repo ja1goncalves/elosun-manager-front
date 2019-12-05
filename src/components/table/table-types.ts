@@ -10,12 +10,11 @@ export type TypeSelectedPagination = {
 };
 
 export type TypeTableComponentConfig = {
-    columnDefs: TypeColumnDefs[];
     rowData: TypeRowData[];
     pageCount: number;
 }
 
-type TypeColumnDefs = {
+export type TypeColumnDefs = {
     headerName: string;
     field: string;
     sortable?: boolean;

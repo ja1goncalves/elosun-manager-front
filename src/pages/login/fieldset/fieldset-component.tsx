@@ -1,5 +1,4 @@
 import React from 'react';
-import { ErrorMessage } from 'formik';
 import { InputForm } from './input';
 import { FieldCheckComponent } from './field-check';
 import { TypeFormFieldsetProps } from './fieldset-types';
@@ -16,8 +15,5 @@ export default ({ type, name, placeholder, label, id, onChange, value, error, sh
             value={value}
             error={error} />
         <FieldCheckComponent invalid={error} show={showError} />
-        {/* <p className="text-danger mb-0">
-            <ErrorMessage name={name} />
-        </p> */}
     </fieldset>
 )
