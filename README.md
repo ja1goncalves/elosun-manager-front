@@ -4,39 +4,44 @@ Este projeto faz o CRUD dos dados no elosun para um usuário interno
 
 > Este projeto foi criado utilizando o [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Pré-requisitos
 
-In the project directory, you can run:
+- Node 8+
+- [npm](https://www.npmjs.com/get-npm)
+- yarn
+    - Execute `npm i -g yarn` para instalar
 
-### `yarn start`
+### Rodando localmente
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Execute na linha de comando:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. `yarn install` (ou `npm install`)
+2. `yarn start` (ou `npm run start`)
 
-### `yarn test`
+### Mexendo com variáveis de ambiente
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Os ambientes que existem junto com os arquivos com as variáveis:
 
-### `yarn build`
+**TODAS as variáveios de ambiente precisam começar com *REACT_APP_***
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+|Ambiente   |Arquivo de variáveis|Comando para executar um ambiente|
+|:---------:|:-------------------|:--------------------------------|
+|development|`.env.development`  |`npm run start`                  |
+|production |`.env.production`   |`npm run build`                  |
+|test       |`.env.test`         |`npm run test`                   |
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Autenticação das rotas
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para bloquear as rotas, for utilizado o componente `AuthRoute` localizado em './src/utils/auth.tsx'.
 
-### `yarn eject`
+Ele faz o seguinte:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Carrega uma tag `Route` do `react-router-dom`
+2. Verifica se existe autenticação. (demais regra de negócio de autenticação das rotas devem ser colocadas lá também)
+3. *Se ele passar* na autenticação, reinderiza a página.
+4. *Se ele não passar* na autenticação, redireciona para página de login
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+No arquivo `App.tsx` localizado em './src/pages/App.tsx'.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Quando o usuário entra no site sem estar autenticado, ele carrega apenas a tela de login
+2. Quando o usuário se autentica, é carregado o arquivo `MainPage`, que carrega as rotas e cabeçalhos
