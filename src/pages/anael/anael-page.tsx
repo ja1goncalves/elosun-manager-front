@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { TypeTableComponentConfig, TypeSelectedPagination } from '../../components/table/table-types';
+import { TypeTableComponentConfig, TypeSelectedPagination, TypeColumnDefs } from '../../components/table/table-types';
 import { TableComponent } from '../../components/table';
 import { StyledCard } from '../../components/page-card';
 
 export default () => {
-    const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ columnDefs: [], rowData: [], pageCount: 0 });
-    const columnDefs = [
+    const [columnDefs] = useState<TypeColumnDefs[]>([
         { headerName: 'Nome', field: 'name' },
         { headerName: 'Idade', field: 'age' },
         { headerName: 'Preço', field: 'price' },
-    ];
+    ]);
+    const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ rowData: [], pageCount: 0 });
 
     useEffect(() => {
         setTableInfo({
-            columnDefs,
             rowData: [
                 { name: 'Roberto Carlos', age: 25, price: 'R$ 1.000,00' },
                 { name: 'Roberto Carlos', age: 25, price: 'R$ 1.000,00' },
                 { name: 'Roberto Carlos', age: 25, price: 'R$ 1.000,00' },
             ],
-            pageCount: 10,
+            pageCount: 2,
         });
     }, []);
 
@@ -42,6 +41,7 @@ export default () => {
                 <div className="row w-100">
                     <TableComponent
                         {...tableInfo}
+                        columnDefs={columnDefs}
                         handlePagination={handlePagination}
                     />
                 </div>

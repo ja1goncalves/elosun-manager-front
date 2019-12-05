@@ -13,3 +13,11 @@ export const StyledLoginBox = styled.div`
     background-color: #fff;
     padding: 20px;
 `;
+
+export const StyledParagraphLink = styled.p`
+    color: #007bff;
+    cursor: pointer;
+    :hover {
+        text-decoration: underline;
+    }
+`;
