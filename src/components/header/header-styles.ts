@@ -9,6 +9,12 @@ export const StyledHeader = styled.header`
     left: 0;
     top: 0; 
 
+    .logo-nav {
+        height: 60px;
+        .logo-text {
+            font-size: 1.6rem;
+        }   
+    }
     ul, li {
         padding: 0;
         list-style: none;
@@ -19,5 +25,13 @@ export const StyledHeader = styled.header`
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+`;
+
+export const StyledLogoNav = styled.nav`
+    height: 60px;
+    min-height: 60px;
+    .logo-text {
+        font-size: 1.6rem;
     }
 `;

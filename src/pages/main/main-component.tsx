@@ -11,18 +11,16 @@ import { HeaderComponentUp } from '../../components/header-up';
 import { StyledPage } from './main-styles';
 
 export default () => (
-    <div className="d-flex flex-row">
+    <>
         <HeaderComponentLeft />
-        <section className="container-fluid">
-            <HeaderComponentUp />
-            <StyledPage className="row container-fluid overflow-auto">
-                <Switch>
-                    <AuthRoute path='/home' component={HomePage} />
-                    <AuthRoute path='/anael' component={AnaelPage} />
-                    <AuthRoute path='/purchasers' component={PurchaserPage} />
-                    <AuthRoute path='/sellers' component={SellerPage} />
-                </Switch>
-            </StyledPage>
-        </section>
-    </div>
+        <HeaderComponentUp />
+        <StyledPage className="row container-fluid overflow-auto">
+            <Switch>
+                <AuthRoute path='/home' component={HomePage} />
+                <AuthRoute path='/anael' component={AnaelPage} />
+                <AuthRoute path='/purchasers' component={PurchaserPage} />
+                <AuthRoute path='/sellers' component={SellerPage} />
+            </Switch>
+        </StyledPage>
+    </>
 )
