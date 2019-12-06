@@ -6,6 +6,7 @@ import { TypeLoginFormik } from './login-form/login-form-types';
 import { TypeSelectedForm } from './login-types';
 import { TypeForgotPasswordFormik } from './forgot-password/forgot-password-types';
 import { ForgotPasswordForm } from './forgot-password';
+import { LoadIcon } from '../../components/load-icon';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
@@ -30,8 +31,9 @@ export default () => {
         <StyledLoginPage className="d-flex justify-content-center align-items-center">
             {logged && <Redirect to="/home" />}
 
-            <StyledLoginBox className="d-flex justify-content-center flex-column text-center">
+            <StyledLoginBox loadingSubmit={loadingSubmit} className="d-flex justify-content-center flex-column text-center">
                 <h1 className="mb-4 mt-3">Elosun</h1>
+                <LoadIcon loading={loadingSubmit} style={{ left: '49%', top: '48%' }} />
                 {selectedForm === 'login' && (
                     <>
                         <LoginForm

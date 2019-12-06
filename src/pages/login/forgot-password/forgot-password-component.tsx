@@ -26,7 +26,7 @@ export default ({ handleForgotPasswordSubmit, loadingSubmit }: ForgotPasswordPro
                     onChange={handleChange}
                     />
                 <StyledSubmitButton isLoading={loadingSubmit} type="submit">
-                    {loadingSubmit ? '...Carregando' : 'Enviar'}
+                    {loadingSubmit ? '...Enviando' : 'Enviar'}
                 </StyledSubmitButton>
             </form>
             )}

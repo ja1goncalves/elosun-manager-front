@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { StyledLoginBoxProps } from './login-types';
 
 export const StyledLoginPage = styled.div`
     background-color: ${({ theme }) => theme.blue.terciaryColor};
@@ -6,12 +7,20 @@ export const StyledLoginPage = styled.div`
     height: 100vh;
 `;
 
-export const StyledLoginBox = styled.div`
+export const StyledLoginBox = styled.div<StyledLoginBoxProps>`
     border-radius: 5px;
-    margin: 0 10px;
+    width: 90%;
+    max-width: 330px;
     height: 350px;
     background-color: #fff;
     padding: 20px;
+
+    ${({ loadingSubmit }) => loadingSubmit && 
+        css`
+            opacity: 0.8;
+            pointer-events: none;
+        `
+    }
 `;
 
 export const StyledParagraphLink = styled.p`
