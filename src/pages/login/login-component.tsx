@@ -7,18 +7,30 @@ import { TypeSelectedForm } from './login-types';
 import { TypeForgotPasswordFormik } from './forgot-password/forgot-password-types';
 import { ForgotPasswordForm } from './forgot-password';
 import { LoadIcon } from '../../components/load-icon';
+import { AuthService } from '../../services/auth';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
     const [logged, setLogged] = useState<boolean>(false);
     const [selectedForm, setSelectedForm] = useState<TypeSelectedForm>('login');
 
+    const authService = new AuthService();
+
     // TODO: Adicionar requisição para se logar
     const handleLoginSubmit = (formik: TypeLoginFormik) => {
         console.log('formik: ', formik);
         setLoadingSubmit(true);
-        localStorage.setItem('auth', '213rsdzcr44cv4vtrrtdf');
-        setLogged(true);
+        // localStorage.setItem('auth', '213rsdzcr44cv4vtrrtdf');
+        authService.loginUser(formik)
+            .then(res => {
+                console.log('res: ', res);
+                setLoadingSubmit(false);
+            })
+            .catch(err => {
+                console.log('err: ', err);
+                setLoadingSubmit(false);
+            });
+        // setLogged(true);
     }
 
     // TODO: Adicionar requisição para recuperar a senha
