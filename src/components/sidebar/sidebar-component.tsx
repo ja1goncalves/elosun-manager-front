@@ -58,7 +58,7 @@ export default ({ show }: SidebarComponentProps) => {
                     </aside>
                     <hr style={{ backgroundColor: '#aaa' }} className="w-100" />
                     <nav className="row">
-                        <NavMenuComponent />
+                        <NavMenuComponent setShowSidebar={setShowSidebar} />
                     </nav>
                     <hr style={{ backgroundColor: '#aaa' }} className="w-100" />
                     <nav className="container-fluid">
