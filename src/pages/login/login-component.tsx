@@ -8,6 +8,7 @@ import { TypeForgotPasswordFormik } from './forgot-password/forgot-password-type
 import { ForgotPasswordForm } from './forgot-password';
 import { LoadIcon } from '../../components/load-icon';
 import { AuthService } from '../../services/auth';
+import { useHistory } from 'react-router-dom';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
@@ -15,6 +16,7 @@ export default () => {
     const [selectedForm, setSelectedForm] = useState<TypeSelectedForm>('login');
 
     const authService = new AuthService();
+    const history = useHistory();
 
     // TODO: Adicionar requisição para se logar
     const handleLoginSubmit = (formik: TypeLoginFormik) => {
@@ -25,6 +27,7 @@ export default () => {
             .then(res => {
                 console.log('res: ', res);
                 setLoadingSubmit(false);
+                history.push('home');
             })
             .catch(err => {
                 console.log('err: ', err);
@@ -41,8 +44,6 @@ export default () => {
 
     return (
         <StyledLoginPage className="d-flex justify-content-center align-items-center">
-            {logged && <Redirect to="/home" />}
-
             <StyledLoginBox loadingSubmit={loadingSubmit} className="d-flex justify-content-center flex-column text-center">
                 <h1 className="mb-4 mt-3">Elosun</h1>
                 <LoadIcon loading={loadingSubmit} style={{ left: '49%', top: '48%' }} />

@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
+import { getObjectCookie, TOKEN_COOKIE } from './app.utils';
 
 type Props = {
   redirectTo: string;
@@ -15,11 +16,15 @@ type Props = {
 
 const AuthRoute = ({ component, redirectTo, ...rest }: any) => {
   const Component = component;
+
+  const tokenCookie = getObjectCookie(TOKEN_COOKIE);
+  const hasToken = Boolean(tokenCookie && tokenCookie.token);
+
   return (
     <Route
       {...rest}
       render={props =>
-        localStorage.getItem("auth") ? 
+        hasToken ? 
         (
           <Component {...props} />
         ) : 

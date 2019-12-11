@@ -1,4 +1,6 @@
 
+export const TOKEN_COOKIE = 'token';
+
 export function eraseCookie(...name: string[]): any {
     name.forEach(e => {
         document.cookie = `${e}=123;max-age=0;`;

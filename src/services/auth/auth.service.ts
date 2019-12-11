@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { eraseCookie, getObjectCookie, getCookie } from "../../utils/app.utils";
+import { eraseCookie, getObjectCookie, getCookie, TOKEN_COOKIE } from "../../utils/app.utils";
 import * as _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
@@ -16,15 +16,14 @@ export default class AuthService {
   }
 
   private addAuthToken = (request: AxiosRequestConfig) => {
-    const token = getObjectCookie('token');
+    const token = getObjectCookie(TOKEN_COOKIE);
     if (token) {
-      const { token_type, access_token } = token;
+      const { token: { token_type, access_token } } = token;
       request.headers = {
         ...request.headers,
-        authorization: `${token_type}\n${access_token}`
+        Authorization: `${token_type} ${access_token}`
       }
     }
-    // console.log('token parsed: ', token);
 
     return request;
   }
@@ -42,7 +41,7 @@ export default class AuthService {
 
   /**
    *
-   * @param {string} token
+   * @param {string} token token stringify by JSON.stringify
    */
   private async createTokenData(token: string): Promise<void> {
 
@@ -152,7 +151,7 @@ export default class AuthService {
    * @returns {Observable<any>}
    */
   public getUserAuthenticated(): Promise<any> {
-    return this.http.get('/auth/user/');
+    return this.http.get('/auth/user');
   }
 
   /**
@@ -175,18 +174,18 @@ export default class AuthService {
     await this.http.post('/oauth/token', requestData)
         .then(async (tokenInfo) => {
           const token: string = JSON.stringify({ token: tokenInfo.data, timeLogin: new Date().getTime() });
+          
           await this.createTokenData(token);
           await this.getUserAuthenticated()
             .then((data) => {
             //   this.share.sendLoginState(true);
               const user = JSON.stringify(data);
               this.createUserData(user);
-              auth = data; 
-            //   observer.next();
+              auth = data;
             })
-            .catch(_ => {
-                this.history.push('login');
-                this.logout();
+            .catch(err => {
+              this.history.push('login');
+              this.logout();
             });
         });
 
