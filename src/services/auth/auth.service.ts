@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { eraseCookie, getObjectCookie, getCookie, TOKEN_COOKIE } from "../../utils/app.utils";
+import { eraseCookie, getObjectCookie, getCookie, TOKEN_COOKIE, USER_DATA_COOKIE } from "../../utils/app.utils";
 import * as _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
-import { LoginUserProps, AuthorizedUserResponse } from "./auth-types";
+import { LoginUserProps } from "./auth-types";
 
 export default class AuthService {
   private readonly http = axios.create({
@@ -34,7 +34,7 @@ export default class AuthService {
    */
   private createUserData(user: string): void {
 
-    eraseCookie('user_data');
+    eraseCookie(USER_DATA_COOKIE);
     document.cookie = `user_data=${user};Max-Age=21600`;
 
   }
@@ -45,7 +45,7 @@ export default class AuthService {
    */
   private async createTokenData(token: string): Promise<void> {
 
-    eraseCookie('token');
+    eraseCookie(TOKEN_COOKIE);
     const objToken: any = JSON.parse(token);
     const expires: number = objToken ? objToken.token.expires_in : 21600;
 
@@ -65,10 +65,10 @@ export default class AuthService {
    */
   public getToken(): any {
 
-    const jsonData: any = getObjectCookie('token');
+    const jsonData: any = getObjectCookie(TOKEN_COOKIE);
 
     if (_.isEmpty(jsonData) && !_.isObject(jsonData)) {
-      eraseCookie('token');
+      eraseCookie(TOKEN_COOKIE);
       this.history.push('login');
     } else {
       return jsonData.token.access_token;
@@ -82,7 +82,7 @@ export default class AuthService {
    */
   public getDataUser(): any {
 
-    const jsonData: any = getObjectCookie('user_data');
+    const jsonData: any = getObjectCookie(USER_DATA_COOKIE);
     if (_.isEmpty(jsonData) && !_.isObject(jsonData)) {
       this.logout();
     }
@@ -97,7 +97,7 @@ export default class AuthService {
    */
   public getUsername(): any {
 
-    const jsonData: any = getObjectCookie('user_data');
+    const jsonData: any = getObjectCookie(USER_DATA_COOKIE);
     if (_.isEmpty(jsonData) && !_.isObject(jsonData)) {
       return '';
     }
@@ -117,8 +117,8 @@ export default class AuthService {
     try {
       moment.locale('pt-br');
 
-      const tokenString: string = getCookie('token') || '{}';
-      const userString: string = getCookie('user_data') || '{}';
+      const tokenString: string = getCookie(TOKEN_COOKIE) || '{}';
+      const userString: string = getCookie(USER_DATA_COOKIE) || '{}';
       const token: any = JSON.parse(tokenString);
       const user: any = JSON.parse(userString);
 
@@ -137,12 +137,13 @@ export default class AuthService {
 
   }
 
-  public logout(): void {
+  async logout(): Promise<void> {
 
-    eraseCookie('token');
-    eraseCookie('user_data');
+    await eraseCookie(TOKEN_COOKIE);
+    await eraseCookie(USER_DATA_COOKIE);
     this.history.push('login');
     window.stop();
+    await this.http.delete('/auth/users/logoff');
 
   }
 
@@ -177,8 +178,7 @@ export default class AuthService {
           
           await this.createTokenData(token);
           await this.getUserAuthenticated()
-            .then((data) => {
-            //   this.share.sendLoginState(true);
+            .then(({ data: { data } }) => {
               const user = JSON.stringify(data);
               this.createUserData(user);
               auth = data;
@@ -190,5 +190,10 @@ export default class AuthService {
         });
 
     return Promise.resolve(auth);
+  }
+
+  isLogged(): boolean {
+    const tokenCookie = getObjectCookie(TOKEN_COOKIE);
+    return Boolean(tokenCookie && tokenCookie.token);
   }
 }

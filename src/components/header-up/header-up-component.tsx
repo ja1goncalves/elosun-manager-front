@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import { StyledUpHeader, StyledLogOffButton } from './header-up-styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff, faAlignJustify } from '@fortawesome/free-solid-svg-icons';
-import { Redirect } from 'react-router';
 import { SidebarComponent } from '../sidebar';
+import { useHistory } from 'react-router-dom';
+import { AuthService } from '../../services/auth';
 
 export default () => {
-    const [goToLogin, setGoToLogin] = useState<boolean>(false);
     const [openSideMenu, setOpenSideMenu] = useState<boolean>(false);
-    const logoffUser = () => {
-        localStorage.removeItem('auth');
-        setGoToLogin(true);
+
+    const authService = new AuthService();
+    const history = useHistory();
+
+    const logoffUser = async () => {
+        await authService.logout();
+        history.push('login');
     }
 
     const openSidebarMenu = async () => {
@@ -20,7 +24,6 @@ export default () => {
 
     return (
         <>
-            {goToLogin && <Redirect to="/login" />}
             <StyledUpHeader className="row d-flex justify-content-end align-items-center p-3 mb-4 position-fixed">
                 <FontAwesomeIcon
                     style={{ fontSize: '2rem', cursor: 'pointer' }}

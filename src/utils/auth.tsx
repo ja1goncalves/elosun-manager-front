@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { getObjectCookie, TOKEN_COOKIE } from './app.utils';
+import { AuthService } from '../services/auth';
 
 type Props = {
   redirectTo: string;
@@ -13,18 +13,15 @@ type Props = {
  * @param {bool} authenticated
  * @param {strig} redirectTo
  */
-
 const AuthRoute = ({ component, redirectTo, ...rest }: any) => {
+  const authService = new AuthService();
   const Component = component;
-
-  const tokenCookie = getObjectCookie(TOKEN_COOKIE);
-  const hasToken = Boolean(tokenCookie && tokenCookie.token);
 
   return (
     <Route
       {...rest}
       render={props =>
-        hasToken ? 
+        authService.isLogged() ? 
         (
           <Component {...props} />
         ) : 

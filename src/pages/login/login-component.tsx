@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useState, useEffect } from 'react';
 import { StyledLoginPage, StyledLoginBox, StyledParagraphLink } from './login-styles';
 import { LoginForm } from './login-form';
 import { TypeLoginFormik } from './login-form/login-form-types';
@@ -12,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
-    const [logged, setLogged] = useState<boolean>(false);
     const [selectedForm, setSelectedForm] = useState<TypeSelectedForm>('login');
 
     const authService = new AuthService();
@@ -20,27 +18,32 @@ export default () => {
 
     // TODO: Adicionar requisição para se logar
     const handleLoginSubmit = (formik: TypeLoginFormik) => {
-        console.log('formik: ', formik);
         setLoadingSubmit(true);
-        // localStorage.setItem('auth', '213rsdzcr44cv4vtrrtdf');
         authService.loginUser(formik)
             .then(res => {
-                console.log('res: ', res);
                 setLoadingSubmit(false);
                 history.push('home');
             })
             .catch(err => {
-                console.log('err: ', err);
                 setLoadingSubmit(false);
             });
-        // setLogged(true);
     }
 
     // TODO: Adicionar requisição para recuperar a senha
     const handleForgotPasswordSubmit = (formik: TypeForgotPasswordFormik) => {
-        console.log('formik: ', formik);
         setLoadingSubmit(true);
     }
+
+    useEffect(() => {
+        const handleInit = (): void => {
+            if (authService.isLogged()) {
+                history.push('home');
+            }
+        }
+
+        // If the user is logged, then he's redirect to dashboard
+        handleInit();
+    }, [authService, history]);
 
     return (
         <StyledLoginPage className="d-flex justify-content-center align-items-center">
