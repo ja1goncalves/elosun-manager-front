@@ -44,6 +44,12 @@ type NotifyParam = {
     message: string;
 }
 
+/**
+ * @description Mostra um Toast com um tipo e mensagem
+ * @param {NotifyParam} param0
+ * - type: tipo do toast, altera a cor de background
+ * - message: mensagem que aparecerá no modal
+ */
 export function notify({ type, message }: NotifyParam) {
     toast[type](message, {
         position: "top-right",
