@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 export const TOKEN_COOKIE = 'token';
 export const USER_DATA_COOKIE = 'user_data';
 
@@ -35,4 +37,19 @@ export function cleanCookie(): void {
     alert('Os cookies foram limpos com sucesso. Tente entrar no sistema novamente!');
 
     window.location.reload(!0);
+}
+
+type NotifyParam = {
+    type: 'error' | 'success';
+    message: string;
+}
+
+export function notify({ type, message }: NotifyParam) {
+    toast[type](message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+    });
 }

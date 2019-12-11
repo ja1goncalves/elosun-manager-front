@@ -8,6 +8,7 @@ import { ForgotPasswordForm } from './forgot-password';
 import { LoadIcon } from '../../components/load-icon';
 import { AuthService } from '../../services/auth';
 import { useHistory } from 'react-router-dom';
+import { notify } from '../../utils/app.utils';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
@@ -25,6 +26,10 @@ export default () => {
                 history.push('home');
             })
             .catch(err => {
+                notify({
+                    type: 'error',
+                    message: 'Login ou senha errados',
+                })
                 setLoadingSubmit(false);
             });
     }
