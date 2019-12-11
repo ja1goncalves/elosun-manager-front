@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
+import { AuthService } from '../services/auth';
 
 type Props = {
   redirectTo: string;
@@ -12,14 +13,15 @@ type Props = {
  * @param {bool} authenticated
  * @param {strig} redirectTo
  */
-
 const AuthRoute = ({ component, redirectTo, ...rest }: any) => {
+  const authService = new AuthService();
   const Component = component;
+
   return (
     <Route
       {...rest}
       render={props =>
-        localStorage.getItem("auth") ? 
+        authService.isLogged() ? 
         (
           <Component {...props} />
         ) : 
