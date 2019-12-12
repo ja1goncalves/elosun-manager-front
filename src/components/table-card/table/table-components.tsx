@@ -13,7 +13,7 @@ export default ({ columnDefs, service }: TableComponentProps) => {
 
     useEffect(() => {
         (async () => {
-            const tableInfo = await service.tableData();
+            const tableInfo = await service.tableData({});
 
             if (tableInfo) {
                 setTableInfo({
@@ -24,9 +24,16 @@ export default ({ columnDefs, service }: TableComponentProps) => {
         })()
     }, [service]);
 
-    const handlePagination = ({ selected }: TypeSelectedPagination): void => {
+    const handlePagination = async ({ selected }: TypeSelectedPagination): Promise<void> => {
         // TODO: Adicionar requisição para coletar os dados da tabela
-        console.log('selectedPage: ', selected);
+        const tableInfo = await service.tableData({ page: selected + 1 });
+
+        if (tableInfo) {
+            setTableInfo({
+                rowData: tableInfo.data,
+                pageCount: tableInfo.last_page,
+            });
+        }
     }
 
     return (

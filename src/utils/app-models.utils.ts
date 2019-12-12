@@ -13,6 +13,11 @@ export type PaginateDatabaTable = {
     total: number;
 }
 
+
+export type TableDataParams = {
+    page?: number;
+}
+
 export interface ITableData {
-    tableData: () => Promise<PaginateDatabaTable>;
+    tableData: ({ page }: TableDataParams) => Promise<PaginateDatabaTable>;
 }

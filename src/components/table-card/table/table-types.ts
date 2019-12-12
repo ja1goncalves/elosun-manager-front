@@ -1,12 +1,12 @@
-import { PaginateDatabaTable } from "../../../utils/app-models.utils";
+import { ITableData } from "../../../utils/app-models.utils";
 
 export type TableComponentProps = {
     columnDefs: TypeColumnDefs[];
-    service: { tableData: () => Promise<PaginateDatabaTable> };
+    service: ITableData;
 };
 
 export type TypeSelectedPagination = {
-    selected: number
+    selected: number;
 };
 
 export type TypeTableComponentConfig = {
