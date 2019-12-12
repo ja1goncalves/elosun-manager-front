@@ -17,13 +17,12 @@ export default () => {
     const authService = new AuthService();
     const history = useHistory();
 
-    // TODO: Adicionar requisição para se logar
     const handleLoginSubmit = (formik: TypeLoginFormik) => {
         setLoadingSubmit(true);
         authService.loginUser(formik)
             .then(res => {
                 setLoadingSubmit(false);
-                history.push('home');
+                history.push('dashboard');
             })
             .catch(err => {
                 notify({
@@ -42,7 +41,7 @@ export default () => {
     useEffect(() => {
         const handleInit = (): void => {
             if (authService.isLogged()) {
-                history.push('home');
+                history.push('dashboard');
             }
         }
 
