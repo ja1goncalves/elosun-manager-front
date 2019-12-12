@@ -1,7 +1,21 @@
 import React from 'react';
+import { TableCardComponent } from '../../components/table-card';
+import { SellerService } from '../../services/seller';
 
 export default () => {
+    const columnDefs = [
+        { headerName: 'Nome', field: 'name' },
+        { headerName: 'Email', field: 'email' },
+        { headerName: 'Documento legal', field: 'cpf_cnpj' },
+        { headerName: 'Celular', field: 'cellphone' },
+        { headerName: 'Código do comprador', field: 'number' },
+    ]
+
     return (
-        <p>Página de vendedores</p>
+        <TableCardComponent
+            service={new SellerService()}
+            columnDefs={columnDefs}
+            className={'row w-100'}
+            listName={'vendedores'} />
     )
 }

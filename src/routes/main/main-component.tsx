@@ -1,14 +1,17 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 
-import { DashboardPage } from '../dashboard';
-import { DistributorPage } from '../distributor';
-import { PurchaserPage } from '../purchasers';
-import { SellerPage } from '../sellers';
 import { HeaderComponentLeft } from '../../components/header';
 import AuthRoute from '../../utils/auth';
 import { HeaderComponentUp } from '../../components/header-up';
 import { StyledPage } from './main-styles';
+
+import { DashboardPage } from '../../pages/dashboard';
+import { DistributorPage } from '../../pages/distributor';
+import { PurchaserPage } from '../../pages/purchasers';
+import { SellerPage } from '../../pages/sellers';
+import { StockPage } from '../../pages/stock';
+import { OrderPage } from '../../pages/order';
 
 export default () => (
     <>
@@ -20,6 +23,8 @@ export default () => (
                 <AuthRoute path='/distributors' component={DistributorPage} />
                 <AuthRoute path='/purchasers' component={PurchaserPage} />
                 <AuthRoute path='/sellers' component={SellerPage} />
+                <AuthRoute path='/stocks' component={StockPage} />
+                <AuthRoute path='/orders' component={OrderPage} />
             </Switch>
         </StyledPage>
     </>

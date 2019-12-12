@@ -1,5 +1,5 @@
 import React from 'react';
-import { faSolarPanel, faLightbulb, faSeedling, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSolarPanel, faLightbulb, faSeedling, faUser, faLayerGroup, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
 import { NavLinkComponent } from '../../header/nav-link';
 import { NavMenuProps } from './nav-menu-types';
 
@@ -28,6 +28,18 @@ export default ({ setShowSidebar }: NavMenuProps) => {
                 routeName="Vendedores"
                 toUrl="/sellers"
                 icon={faSolarPanel}
+                setShowSidebar={setShowSidebar}
+            />
+            <NavLinkComponent
+                routeName="Estoque"
+                toUrl="/stocks"
+                icon={faLayerGroup}
+                setShowSidebar={setShowSidebar}
+            />
+            <NavLinkComponent
+                routeName="Pagamentos"
+                toUrl="/orders"
+                icon={faMoneyBillWave}
                 setShowSidebar={setShowSidebar}
             />
         </ul>

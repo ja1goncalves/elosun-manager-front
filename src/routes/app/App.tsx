@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import AuthRoute from '../../utils/auth';
 import { MainPage } from '../main';
-import { LoginPage } from '../login';
+import { LoginPage } from '../../pages/login';
 
 const App: React.FC = () => {
   return (
