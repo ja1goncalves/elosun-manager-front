@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { addAuthToken } from '../../utils/axios-interceptors.utils';
-import { PaginateDatabaTable } from '../../utils/app-models.utils';
+import { PaginateDatabaTable, ITableData } from '../../utils/app-models.utils';
 
-export default class DistributorService {
+export default class DistributorService implements ITableData {
     private readonly http = axios.create({
         baseURL: process.env.REACT_APP_API_URL,
       })
@@ -11,7 +11,7 @@ export default class DistributorService {
         this.http.interceptors.request.use(request => addAuthToken(request));
     }
 
-    tableData = async (): Promise<PaginateDatabaTable> => {
+    async tableData(): Promise<PaginateDatabaTable> {
         return this.http.get('/admin/distributors').then(res => res.data);
     }
 }

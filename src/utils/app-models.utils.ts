@@ -12,3 +12,7 @@ export type PaginateDatabaTable = {
     to: string | null;
     total: number;
 }
+
+export interface ITableData {
+    tableData: () => Promise<PaginateDatabaTable>;
+}

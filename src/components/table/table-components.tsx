@@ -31,7 +31,7 @@ export default ({ columnDefs, service }: TableComponentProps) => {
                 pageCount: 2,
             });
         })()
-    }, []);
+    }, [service]);
 
     const handlePagination = ({ selected }: TypeSelectedPagination): void => {
         // TODO: Adicionar requisição para coletar os dados da tabela
