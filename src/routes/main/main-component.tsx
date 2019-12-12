@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { HeaderComponentLeft } from '../../components/header';
 import AuthRoute from '../../utils/auth';
@@ -19,6 +19,7 @@ export default () => (
         <HeaderComponentUp />
         <StyledPage className="row container-fluid overflow-auto">
             <Switch>
+                <Route exact path='/' render={() => <Redirect to="/dashboard" />} />
                 <AuthRoute path='/dashboard' component={DashboardPage} />
                 <AuthRoute path='/distributors' component={DistributorPage} />
                 <AuthRoute path='/purchasers' component={PurchaserPage} />
