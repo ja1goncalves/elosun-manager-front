@@ -139,11 +139,11 @@ export default class AuthService {
 
   async logout(): Promise<void> {
 
+    await this.http.delete('/auth/user/logoff');
     await eraseCookie(TOKEN_COOKIE);
     await eraseCookie(USER_DATA_COOKIE);
     this.history.push('login');
     window.stop();
-    await this.http.delete('/auth/users/logoff');
 
   }
 
