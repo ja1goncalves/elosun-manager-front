@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
+import ReactPaginate from 'react-paginate';
 import { TableComponentProps, TypeTableComponentConfig, TypeSelectedPagination } from './table-types';
 import { StyledReactPaginateBox } from './table-styles';
-import ReactPaginate from 'react-paginate';
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 
-export default ({ columnDefs, service }: TableComponentProps) => {
+export default ({ columnDefs, service }: TableComponentProps, ref: any) => {
     const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ rowData: [], pageCount: 0 });
 
     useEffect(() => {
@@ -25,7 +25,6 @@ export default ({ columnDefs, service }: TableComponentProps) => {
     }, [service]);
 
     const handlePagination = async ({ selected }: TypeSelectedPagination): Promise<void> => {
-        // TODO: Adicionar requisição para coletar os dados da tabela
         const tableInfo = await service.tableData({ page: selected + 1 });
 
         if (tableInfo) {
@@ -36,13 +35,22 @@ export default ({ columnDefs, service }: TableComponentProps) => {
         }
     }
 
+    // Documentação de reinderizar colunas do agGrid:
+    // https://www.ag-grid.com/javascript-grid-resizing/
+    const onGridReady = (params: any) => {
+        const gridApi = params.api;
+        gridApi.sizeColumnsToFit();
+    }
+
     return (
         <>
             <div className="ag-theme-balham" style={ {height: '300px', width: '100%'} }>
                 <AgGridReact
+                    defaultColDef={{ resizable: true }}
                     columnDefs={columnDefs}
                     rowData={tableInfo.rowData}
-                    modules={AllCommunityModules}>
+                    modules={AllCommunityModules}
+                    onGridReady={onGridReady}>
                 </AgGridReact>
             </div>
             <StyledReactPaginateBox

@@ -9,6 +9,7 @@ export default () => {
         { headerName: 'Documento legal', field: 'cpf_cnpj' },
         { headerName: 'Celular', field: 'cellphone' },
         { headerName: 'Código do comprador', field: 'number' },
+        { headerName: 'Data de criação', field: 'created_at' },
     ]
 
     return (

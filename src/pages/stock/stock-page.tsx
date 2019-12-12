@@ -4,9 +4,7 @@ import { StockService } from '../../services/stock';
 
 export default () => {
     const columnDefs = [
-        { headerName: '', field: 'created_at' },
-        { headerName: 'Data de criação', field: 'created_at' },
-        { headerName: 'Data de criação', field: 'created_at' },
+        { headerName: 'Sei la', field: 'created_at' },
         { headerName: 'Data de criação', field: 'created_at' },
         { headerName: 'Status', field: 'order_status_id' },
     ]
