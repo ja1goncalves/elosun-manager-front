@@ -1,9 +1,10 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { eraseCookie, getObjectCookie, getCookie, TOKEN_COOKIE, USER_DATA_COOKIE } from "../../utils/app.utils";
+import axios from "axios";
 import * as _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { LoginUserProps } from "./auth-types";
+import { addAuthToken } from '../../utils/axios-interceptors.utils';
+import { eraseCookie, getObjectCookie, getCookie, TOKEN_COOKIE, USER_DATA_COOKIE } from "../../utils/app.utils";
 
 export default class AuthService {
   private readonly http = axios.create({
@@ -12,20 +13,7 @@ export default class AuthService {
   private history = useHistory();
 
   constructor() {
-    this.http.interceptors.request.use(request => this.addAuthToken(request));
-  }
-
-  private addAuthToken = (request: AxiosRequestConfig) => {
-    const token = getObjectCookie(TOKEN_COOKIE);
-    if (token) {
-      const { token: { token_type, access_token } } = token;
-      request.headers = {
-        ...request.headers,
-        Authorization: `${token_type} ${access_token}`
-      }
-    }
-
-    return request;
+    this.http.interceptors.request.use(request => addAuthToken(request));
   }
 
   /**
@@ -83,6 +71,7 @@ export default class AuthService {
   public getDataUser(): any {
 
     const jsonData: any = getObjectCookie(USER_DATA_COOKIE);
+
     if (_.isEmpty(jsonData) && !_.isObject(jsonData)) {
       this.logout();
     }
@@ -152,7 +141,7 @@ export default class AuthService {
    * @returns {Observable<any>}
    */
   public getUserAuthenticated(): Promise<any> {
-    return this.http.get('/auth/user');
+    return this.http.get('/auth/user').then(res => res.data);
   }
 
   /**
@@ -178,7 +167,7 @@ export default class AuthService {
           
           await this.createTokenData(token);
           await this.getUserAuthenticated()
-            .then(({ data: { data } }) => {
+            .then(({ data }) => {
               const user = JSON.stringify(data);
               this.createUserData(user);
               auth = data;

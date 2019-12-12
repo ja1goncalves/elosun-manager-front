@@ -1,8 +1,8 @@
+import { PaginateDatabaTable } from "../../utils/app-models.utils";
+
 export type TableComponentProps = {
     columnDefs: TypeColumnDefs[];
-    rowData: TypeRowData[];
-    pageCount: number;
-    handlePagination: (selectedItem: TypeSelectedPagination) => void;
+    service: { tableData: () => Promise<PaginateDatabaTable> };
 };
 
 export type TypeSelectedPagination = {

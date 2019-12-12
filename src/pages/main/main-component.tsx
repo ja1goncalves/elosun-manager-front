@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 
-import { HomePage } from '../home';
-import { AnaelPage } from '../anael';
+import { DashboardPage } from '../dashboard';
+import { DistributorPage } from '../distributor';
 import { PurchaserPage } from '../purchasers';
 import { SellerPage } from '../sellers';
 import { HeaderComponentLeft } from '../../components/header';
@@ -16,8 +16,8 @@ export default () => (
         <HeaderComponentUp />
         <StyledPage className="row container-fluid overflow-auto">
             <Switch>
-                <AuthRoute path='/home' component={HomePage} />
-                <AuthRoute path='/anael' component={AnaelPage} />
+                <AuthRoute path='/dashboard' component={DashboardPage} />
+                <AuthRoute path='/distributors' component={DistributorPage} />
                 <AuthRoute path='/purchasers' component={PurchaserPage} />
                 <AuthRoute path='/sellers' component={SellerPage} />
             </Switch>

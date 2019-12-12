@@ -7,14 +7,14 @@ export default ({ setShowSidebar }: NavMenuProps) => {
     return (
         <ul className="container-fluid h-100">
             <NavLinkComponent
-                routeName="Home"
-                toUrl="/home"
+                routeName="Dashboard"
+                toUrl="/dashboard"
                 icon={faUser}
                 setShowSidebar={setShowSidebar}
             />
             <NavLinkComponent
-                routeName="Anael"
-                toUrl="/anael"
+                routeName="Distribuidores"
+                toUrl="/distributors"
                 icon={faSeedling}
                 setShowSidebar={setShowSidebar}
             />

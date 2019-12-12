@@ -1,20 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import { TableComponentProps } from './table-types';
+import { TableComponentProps, TypeTableComponentConfig, TypeSelectedPagination } from './table-types';
 import { StyledReactPaginateBox } from './table-styles';
 import ReactPaginate from 'react-paginate';
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 
-export default ({ columnDefs, rowData, pageCount, handlePagination }: TableComponentProps) => {
+export default ({ columnDefs, service }: TableComponentProps) => {
+    const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ rowData: [], pageCount: 0 });
+
+    useEffect(() => {
+        (async () => {
+            const tableInfo = await service.tableData();
+
+            if (tableInfo) {
+                setTableInfo({
+                    rowData: tableInfo.data,
+                    pageCount: tableInfo.last_page,
+                });
+            }
+            console.log('rodando krai')
+            setTableInfo({
+                rowData: [
+                    { name: 'Roberto Carlos', site: 25, initials: 'R$ 1.000,00' },
+                    { name: 'Roberto Carlos', site: 25, initials: 'R$ 1.000,00' },
+                    { name: 'Roberto Carlos', site: 25, initials: 'R$ 1.000,00' },
+                ],
+                pageCount: 2,
+            });
+        })()
+    }, []);
+
+    const handlePagination = ({ selected }: TypeSelectedPagination): void => {
+        // TODO: Adicionar requisição para coletar os dados da tabela
+        console.log('selectedPage: ', selected);
+    }
+
     return (
         <>
             <div className="ag-theme-balham" style={ {height: '500px', width: '100%'} }>
                 <AgGridReact
                     columnDefs={columnDefs}
-                    rowData={rowData}
+                    rowData={tableInfo.rowData}
                     modules={AllCommunityModules}>
                 </AgGridReact>
             </div>
@@ -26,7 +55,7 @@ export default ({ columnDefs, rowData, pageCount, handlePagination }: TableCompo
                     nextLabel={'próximo'}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
-                    pageCount={pageCount}
+                    pageCount={tableInfo.pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePagination}

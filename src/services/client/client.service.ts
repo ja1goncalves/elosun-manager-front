@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { addAuthToken } from '../../utils/axios-interceptors.utils';
 
-export default class SellerService {
+export default class ClientService {
     private readonly http = axios.create({
-        baseURL: process.env.REACT_APP_ELOSUN_API_URL,
-    });
+        baseURL: process.env.REACT_APP_API_URL,
+      })
 
     constructor() {
         this.http.interceptors.request.use(request => addAuthToken(request));

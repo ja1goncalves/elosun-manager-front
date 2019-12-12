@@ -3,18 +3,15 @@ import { StyledUpHeader, StyledLogOffButton } from './header-up-styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff, faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { SidebarComponent } from '../sidebar';
-import { useHistory } from 'react-router-dom';
 import { AuthService } from '../../services/auth';
 
 export default () => {
     const [openSideMenu, setOpenSideMenu] = useState<boolean>(false);
 
     const authService = new AuthService();
-    const history = useHistory();
 
     const logoffUser = async () => {
         await authService.logout();
-        history.push('login');
     }
 
     const openSidebarMenu = async () => {
