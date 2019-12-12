@@ -1,4 +1,4 @@
-import { PaginateDatabaTable } from "../../utils/app-models.utils";
+import { PaginateDatabaTable } from "../../../utils/app-models.utils";
 
 export type TableComponentProps = {
     columnDefs: TypeColumnDefs[];

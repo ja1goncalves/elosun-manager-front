@@ -21,15 +21,6 @@ export default ({ columnDefs, service }: TableComponentProps) => {
                     pageCount: tableInfo.last_page,
                 });
             }
-            console.log('rodando krai')
-            setTableInfo({
-                rowData: [
-                    { name: 'Roberto Carlos', site: 25, initials: 'R$ 1.000,00' },
-                    { name: 'Roberto Carlos', site: 25, initials: 'R$ 1.000,00' },
-                    { name: 'Roberto Carlos', site: 25, initials: 'R$ 1.000,00' },
-                ],
-                pageCount: 2,
-            });
         })()
     }, [service]);
 

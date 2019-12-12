@@ -1,7 +1,6 @@
 import React from 'react';
-import { TableComponent } from '../../components/table';
-import { StyledCard } from '../../components/page-card';
 import { DistributorService } from '../../services/distributor';
+import { TableCardComponent } from '../../components/table-card';
 
 export default () => {
     const columnDefs = [
@@ -11,21 +10,10 @@ export default () => {
     ];
 
     return (
-        <StyledCard className="row w-100">
-            <div className="row w-100">
-                <h4>Listagem de fornecedores da anael</h4>
-            </div>
-            <hr className="row w-100" />
-            {/* <div className="row w-100">
-                <h4>Filtragem</h4>
-            </div>
-            <hr className="row w-100" /> */}
-            <div className="row w-100">
-                <TableComponent
-                    columnDefs={columnDefs}
-                    service={new DistributorService()}
-                />
-            </div>
-        </StyledCard>
+        <TableCardComponent
+            service={new DistributorService()}
+            columnDefs={columnDefs}
+            className={'row w-100'}
+            listName={'fornecedores'} />
     )
 }
