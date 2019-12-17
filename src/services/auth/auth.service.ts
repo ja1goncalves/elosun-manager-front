@@ -2,7 +2,7 @@ import axios from "axios";
 import * as _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
-import { LoginUserProps } from "./auth-types";
+import { LoginUserProps, ResetPasswordParams, GetEmailResetPasswordResponse } from "./auth-types";
 import { addAuthToken } from '../../utils/axios-interceptors.utils';
 import { eraseCookie, getObjectCookie, getCookie, TOKEN_COOKIE, USER_DATA_COOKIE } from "../../utils/app.utils";
 
@@ -184,5 +184,29 @@ export default class AuthService {
   isLogged(): boolean {
     const tokenCookie = getObjectCookie(TOKEN_COOKIE);
     return Boolean(tokenCookie && tokenCookie.token);
+  }
+
+  /**
+   * @description 1 - o usuário coloca que esqueceu a senha e é enviado um email
+   * @param {string} email
+   */
+  sendEmailForgotPassword(email: string): Promise<any> {
+    return this.http.post('/auth/reset-password', { email, origin: 'manager' });
+  }
+
+  /**
+   * @description 2 - chega o usuário redirecionado e eu mando o token que chega na url
+   * @param {string} token
+   */
+  getEmailForgotPassword(token: string): Promise<GetEmailResetPasswordResponse> {
+    return this.http.get(`/auth/reset-password/${token}`);
+  }
+
+  /**
+   * @description 3 - Envio a nova senha do usuário
+   * @param params 
+   */
+  resetPassword(params: ResetPasswordParams): Promise<any> {
+    return this.http.post('/auth/reset-password/reset', params);
   }
 }

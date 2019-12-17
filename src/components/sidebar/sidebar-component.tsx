@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyledSidebar, StyledCloseSidebarIcon } from './sidebar-styles';
 import { ProfilePictureComponent } from '../header/profile-picture';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { SidebarComponentProps } from './sidebar-types';
 import { Redirect } from 'react-router';
 import { NavMenuComponent } from './nav-menu';
 import { StyledLogoNav } from '../header/header-styles';
+import { HeaderUpContext } from '../header-up/header-up-context';
 
-export default ({ show }: SidebarComponentProps) => {
+export default () => {
+    const { openSideMenu, setOpenSideMenu } = useContext(HeaderUpContext);
+
     const [sidebarWidth, setSidebarWidth] = useState<number>(0);
-    const [showSidebar, setShowSidebar] = useState<boolean>(show);
     const [goToLogin, setGoToLogin] = useState<boolean>(false);
 
     const logoffUser = () => {
@@ -29,18 +30,14 @@ export default ({ show }: SidebarComponentProps) => {
         }
     }, []);
 
-    useEffect(() => {
-        setShowSidebar(show);
-    }, [show])
-
     return (
         <>
             {goToLogin && <Redirect to="/login" />}
-            <StyledSidebar id="sidebar-mobile" sidebarWidth={sidebarWidth} showSideBar={showSidebar} className="d-block d-lg-none position-fixed">
+            <StyledSidebar id="sidebar-mobile" sidebarWidth={sidebarWidth} showSideBar={openSideMenu} className="d-block d-lg-none position-fixed">
                 <div className="container-fluid h-100 d-flex flex-column">
                     <StyledLogoNav className="row d-flex justify-content-center align-items-center">
                         <StyledCloseSidebarIcon
-                            onClick={() => setShowSidebar(false)}
+                            onClick={() => setOpenSideMenu(false)}
                             icon={faArrowLeft} />
                         <p className="ml-3 mb-0 logo-text">
                             <b>Elo</b>sun
@@ -58,7 +55,7 @@ export default ({ show }: SidebarComponentProps) => {
                     </aside>
                     <hr style={{ backgroundColor: '#aaa' }} className="w-100" />
                     <nav className="row">
-                        <NavMenuComponent setShowSidebar={setShowSidebar} />
+                        <NavMenuComponent setShowSidebar={setOpenSideMenu} />
                     </nav>
                     <hr style={{ backgroundColor: '#aaa' }} className="w-100" />
                     <nav className="container-fluid">

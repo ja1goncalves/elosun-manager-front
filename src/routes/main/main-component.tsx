@@ -20,12 +20,12 @@ export default () => (
         <StyledPage className="row container-fluid overflow-auto">
             <Switch>
                 <Route exact path='/' render={() => <Redirect to="/dashboard" />} />
-                <AuthRoute path='/dashboard' component={DashboardPage} />
-                <AuthRoute path='/distributors' component={DistributorPage} />
-                <AuthRoute path='/purchasers' component={PurchaserPage} />
-                <AuthRoute path='/sellers' component={SellerPage} />
-                <AuthRoute path='/stocks' component={StockPage} />
-                <AuthRoute path='/orders' component={OrderPage} />
+                <AuthRoute path='/dashboard' component={DashboardPage} redirectTo="/login" />
+                <AuthRoute path='/distributors' component={DistributorPage} redirectTo="/login" />
+                <AuthRoute path='/purchasers' component={PurchaserPage} redirectTo="/login" />
+                <AuthRoute path='/sellers' component={SellerPage} redirectTo="/login" />
+                <AuthRoute path='/stocks' component={StockPage} redirectTo="/login" />
+                <AuthRoute path='/orders' component={OrderPage} redirectTo="/login" />
             </Switch>
         </StyledPage>
     </>

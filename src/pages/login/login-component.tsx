@@ -6,15 +6,15 @@ import { TypeSelectedForm } from './login-types';
 import { TypeForgotPasswordFormik } from './forgot-password/forgot-password-types';
 import { ForgotPasswordForm } from './forgot-password';
 import { LoadIcon } from '../../components/load-icon';
-import { AuthService } from '../../services/auth';
 import { useHistory } from 'react-router-dom';
 import { notify } from '../../utils/app.utils';
+import { AuthService } from '../../services/auth';
 
 export default () => {
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
     const [selectedForm, setSelectedForm] = useState<TypeSelectedForm>('login');
-
     const authService = new AuthService();
+
     const history = useHistory();
 
     const handleLoginSubmit = (formik: TypeLoginFormik) => {
@@ -28,14 +28,28 @@ export default () => {
                 notify({
                     type: 'error',
                     message: 'Login ou senha errados',
-                })
+                });
                 setLoadingSubmit(false);
             });
     }
 
-    // TODO: Adicionar requisição para recuperar a senha
     const handleForgotPasswordSubmit = (formik: TypeForgotPasswordFormik) => {
         setLoadingSubmit(true);
+        authService.sendEmailForgotPassword(formik.login)
+            .then(res => {
+                notify({
+                    type: 'success',
+                    message: 'Sucesso! Verifique seu e-mail e siga os passos para alterar a senha',
+                });
+                setLoadingSubmit(false);
+            })
+            .catch(err => {
+                notify({
+                    type: 'error',
+                    message: 'Email não encontrado',
+                });
+                setLoadingSubmit(false);
+            });
     }
 
     useEffect(() => {
@@ -45,7 +59,7 @@ export default () => {
             }
         }
 
-        // If the user is logged, then he's redirect to dashboard
+        // If the user is logged, then he's redirected to dashboard
         handleInit();
     }, [authService, history]);
 

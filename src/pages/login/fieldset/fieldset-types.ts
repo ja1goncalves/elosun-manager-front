@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type TypeFormFieldsetProps = {
-    type: 'text' | 'email' | 'tel' | 'password';
+    type: 'text' | 'email' | 'tel' | 'password' | 'email';
     name: string;
     placeholder?: string;
     label?: string;
@@ -10,4 +10,5 @@ export type TypeFormFieldsetProps = {
     value: string;
     error: boolean;
     showError: boolean;
+    disabled?: boolean;
 }
