@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { StyledSidebar, StyledCloseSidebarIcon } from './sidebar-styles';
-import { ProfilePictureComponent } from '../header/profile-picture';
+import { ProfilePictureComponent } from '../header-left/profile-picture';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
 import { NavMenuComponent } from './nav-menu';
-import { StyledLogoNav } from '../header/header-styles';
+import { StyledLogoNav } from '../header-left/header-styles';
 import { HeaderUpContext } from '../header-up/header-up-context';
 
 export default () => {

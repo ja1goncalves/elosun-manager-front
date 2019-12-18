@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { HeaderComponentLeft } from '../../components/header';
+import { HeaderComponentLeft } from '../../components/header-left';
 import AuthRoute from '../../utils/auth';
 import { HeaderComponentUp } from '../../components/header-up';
 import { StyledPage } from './main-styles';
@@ -12,6 +12,7 @@ import { PurchaserPage } from '../../pages/purchasers';
 import { SellerPage } from '../../pages/sellers';
 import { StockPage } from '../../pages/stock';
 import { OrderPage } from '../../pages/order';
+import { AnaelPage } from '../../pages/anael';
 
 export default () => (
     <>
@@ -21,6 +22,7 @@ export default () => (
             <Switch>
                 <Route exact path='/' render={() => <Redirect to="/dashboard" />} />
                 <AuthRoute path='/dashboard' component={DashboardPage} redirectTo="/login" />
+                <AuthRoute path='/anael' component={AnaelPage} redirectTo="/login" />
                 <AuthRoute path='/distributors' component={DistributorPage} redirectTo="/login" />
                 <AuthRoute path='/purchasers' component={PurchaserPage} redirectTo="/login" />
                 <AuthRoute path='/sellers' component={SellerPage} redirectTo="/login" />
