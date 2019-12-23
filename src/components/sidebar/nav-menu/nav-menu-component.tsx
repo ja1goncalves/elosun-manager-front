@@ -1,6 +1,6 @@
 import React from 'react';
-import { faSolarPanel, faLightbulb, faSeedling, faUser, faLayerGroup, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
-import { NavLinkComponent } from '../../header/nav-link';
+import { faSolarPanel, faLightbulb, faSeedling, faUser, faLayerGroup, faMoneyBillWave, faBurn } from '@fortawesome/free-solid-svg-icons';
+import { NavLinkComponent } from '../../header-left/nav-link';
 import { NavMenuProps } from './nav-menu-types';
 
 export default ({ setShowSidebar }: NavMenuProps) => {
@@ -16,6 +16,12 @@ export default ({ setShowSidebar }: NavMenuProps) => {
                 routeName="Distribuidores"
                 toUrl="/distributors"
                 icon={faSeedling}
+                setShowSidebar={setShowSidebar}
+            />
+            <NavLinkComponent
+                routeName="Anael"
+                toUrl="/anael"
+                icon={faBurn}
                 setShowSidebar={setShowSidebar}
             />
             <NavLinkComponent

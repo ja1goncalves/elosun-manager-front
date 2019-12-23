@@ -3,17 +3,13 @@ import { InputForm } from './input';
 import { FieldCheckComponent } from './field-check';
 import { TypeFormFieldsetProps } from './fieldset-types';
 
-export default ({ type, name, placeholder, label, id, onChange, value, error, showError }: TypeFormFieldsetProps) => (
+export default ({ error, showError, label, id, ...inputAttrs }: TypeFormFieldsetProps) => (
     <fieldset className="form-group d-flex position-relative">
         {label && <label className="text-left" htmlFor={id}>{label}</label>}
         <InputForm
-            id={id}
-            type={type}
-            name={name}
-            placeholder={placeholder}
-            onChange={onChange}
-            value={value}
-            error={error} />
+            {...inputAttrs}
+            error={error}
+            id={id} />
         <FieldCheckComponent invalid={error} show={showError} />
     </fieldset>
 )

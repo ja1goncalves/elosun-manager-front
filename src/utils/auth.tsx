@@ -1,19 +1,19 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { AuthService } from '../services/auth';
+import { AuthService } from "../services/auth";
 
-type Props = {
+type AuthProps = {
+  component: any;
   redirectTo: string;
   path: string;
+  [key: string]: any;
 };
 
 /**
  * HOC Auth Router
- * @param {func} component
- * @param {bool} authenticated
- * @param {strig} redirectTo
+ * @param {AuthProps} param0
  */
-const AuthRoute = ({ component, redirectTo, ...rest }: any) => {
+const AuthRoute = ({ component, redirectTo, ...rest }: AuthProps) => {
   const authService = new AuthService();
   const Component = component;
 
