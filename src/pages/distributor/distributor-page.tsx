@@ -16,11 +16,11 @@ export default () => {
     ];
 
     const cellClicked = (event: any) => {
-        const { data: { initials, name } } = event;
+        const { data: { id, name } } = event;
 
         history.push({
             pathname: 'distributors/stations',
-            search: `?initials=${initials}&name=${name}`,
+            search: `?id=${id}&name=${name}`,
         })
     }
 

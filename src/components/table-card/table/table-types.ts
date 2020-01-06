@@ -4,7 +4,9 @@ export type TableComponentProps = {
     columnDefs: TypeColumnDefs[];
     service: ITableData;
     cellClicked?: (...params: any) => void;
+    onTableRequisition?: (response: any) => void;
     customReqParams?: any;
+    pathToList?: string[];
 };
 
 export type TypeSelectedPagination = {

@@ -2,20 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
 import ReactPaginate from 'react-paginate';
-
-import { TableComponentProps, TypeTableComponentConfig, TypeSelectedPagination } from './table-types';
-import { StyledReactPaginateBox } from './table-styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 
-export default ({ columnDefs, service, cellClicked, customReqParams }: TableComponentProps) => {
+import { TableComponentProps, TypeTableComponentConfig, TypeSelectedPagination } from './table-types';
+import { StyledReactPaginateBox } from './table-styles';
+
+
+export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequisition, pathToList }: TableComponentProps) => {
     const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ rowData: [], pageCount: 0 });
     const [page, setPage] = useState<number>(1);
 
+    const getArrFromPath = (response: any) => {
+        if (pathToList) {
+
+            return pathToList.length === 1 ?
+                response[pathToList[0]] :
+                pathToList.reduce((path, nextPath: string) => {
+                    if (typeof path === 'string')
+                        return response[path][nextPath];
+                    return path[nextPath];
+                });
+
+        }
+
+        return response;
+    }
+
     useEffect(() => {
         (async () => {
-            const tableInfo = await service.tableData({ page, custom: customReqParams });
+            const response = await service.tableData({ page, custom: customReqParams });
+            
+            if (onTableRequisition)
+                onTableRequisition(response);
+
+            const tableInfo = getArrFromPath(response);
 
             if (tableInfo) {
                 setTableInfo({
@@ -27,15 +51,7 @@ export default ({ columnDefs, service, cellClicked, customReqParams }: TableComp
     }, [service, page, customReqParams]);
 
     const handlePagination = async ({ selected }: TypeSelectedPagination): Promise<void> => {
-        // const tableInfo = await service.tableData({ page: selected + 1 });
         setPage(selected + 1);
-
-        // if (tableInfo) {
-        //     setTableInfo({
-        //         rowData: tableInfo.data,
-        //         pageCount: tableInfo.last_page,
-        //     });
-        // }
     }
 
     // Documentação de reinderizar colunas do agGrid:
@@ -61,8 +77,8 @@ export default ({ columnDefs, service, cellClicked, customReqParams }: TableComp
                 style={{ flex: 1 }} 
                 className="d-flex justify-content-end">
                 <ReactPaginate
-                    previousLabel={'anterior'}
-                    nextLabel={'próximo'}
+                    previousLabel={<FontAwesomeIcon icon={faChevronLeft} />}
+                    nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
                     pageCount={tableInfo.pageCount}
