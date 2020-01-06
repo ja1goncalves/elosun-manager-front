@@ -3,6 +3,8 @@ import { ITableData } from "../../../utils/app-models.utils";
 export type TableComponentProps = {
     columnDefs: TypeColumnDefs[];
     service: ITableData;
+    cellClicked?: (...params: any) => void;
+    customReqParams?: any;
 };
 
 export type TypeSelectedPagination = {

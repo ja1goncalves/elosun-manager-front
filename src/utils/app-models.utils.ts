@@ -16,8 +16,9 @@ export type PaginateDatabaTable = {
 
 export type TableDataParams = {
     page?: number;
+    custom?: any;
 }
 
 export interface ITableData {
-    tableData: ({ page }: TableDataParams) => Promise<PaginateDatabaTable>;
+    tableData: (params: TableDataParams) => Promise<PaginateDatabaTable>;
 }

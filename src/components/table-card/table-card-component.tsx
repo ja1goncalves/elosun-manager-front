@@ -3,7 +3,7 @@ import { StyledCard } from '../page-card';
 import { TableComponent } from './table';
 import { TableCardComponentProps } from './table-card-types';
 
-export default ({ className, columnDefs, service, listName }: TableCardComponentProps) => {
+export default ({ className, columnDefs, service, listName, cellClicked, customReqParams }: TableCardComponentProps) => {
     return (
         <StyledCard className={className}>
             <div className="row w-100">
@@ -16,8 +16,10 @@ export default ({ className, columnDefs, service, listName }: TableCardComponent
             <hr className="row w-100" /> */}
             <div className="row w-100">
                 <TableComponent
-                    columnDefs={columnDefs}
                     service={service}
+                    columnDefs={columnDefs}
+                    cellClicked={cellClicked}
+                    customReqParams={customReqParams}
                 />
             </div>
         </StyledCard>
