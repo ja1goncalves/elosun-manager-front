@@ -12,34 +12,16 @@ import { TableComponentProps, TypeTableComponentConfig, TypeSelectedPagination }
 import { StyledReactPaginateBox } from './table-styles';
 
 
-export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequisition, pathToList }: TableComponentProps) => {
+export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequisition }: TableComponentProps) => {
     const [tableInfo, setTableInfo] = useState<TypeTableComponentConfig>({ rowData: [], pageCount: 0 });
     const [page, setPage] = useState<number>(1);
 
-    const getArrFromPath = (response: any) => {
-        if (pathToList) {
-
-            return pathToList.length === 1 ?
-                response[pathToList[0]] :
-                pathToList.reduce((path, nextPath: string) => {
-                    if (typeof path === 'string')
-                        return response[path][nextPath];
-                    return path[nextPath];
-                });
-
-        }
-
-        return response;
-    }
-
     useEffect(() => {
         (async () => {
-            const response = await service.tableData({ page, custom: customReqParams });
+            const tableInfo = await service.tableData({ page, custom: customReqParams });
             
             if (onTableRequisition)
-                onTableRequisition(response);
-
-            const tableInfo = getArrFromPath(response);
+                onTableRequisition(tableInfo);
 
             if (tableInfo) {
                 setTableInfo({
@@ -48,7 +30,7 @@ export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequ
                 });
             }
         })()
-    }, [service, page, customReqParams]);
+    }, [service, page, customReqParams, onTableRequisition]);
 
     const handlePagination = async ({ selected }: TypeSelectedPagination): Promise<void> => {
         setPage(selected + 1);

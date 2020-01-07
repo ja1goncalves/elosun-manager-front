@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { TableCardComponent } from '../../components/table-card';
 import { StationService } from '../../services/station';
 import { queryStringToObject } from '../../utils/app.utils';
@@ -45,6 +45,22 @@ export default () => {
     }
 
     const stationService = StationService.getInstance();
+    
+    const getDistributor = useCallback(
+        async (distributorId: string) => {
+
+            const distributor = await stationService.getDistributorData(distributorId);
+
+            setDistributorData({
+                name: distributor.name,
+                totalStations: distributor.total_stations,
+                potencyKw: distributor.potency_kW,
+                initials: distributor.initials,
+                site: distributor.site,
+                createdAt: moment(distributor.created_at, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+            });
+        
+        }, [stationService]);
 
     useEffect(() => {
 
@@ -55,22 +71,7 @@ export default () => {
             getDistributor(queryString.id);
         }
 
-    }, []);
-
-    const getDistributor = async (distributorId: string) => {
-
-        const distributor = await stationService.getDistributorData(distributorId);
-
-        setDistributorData({
-            name: distributor.name,
-            totalStations: distributor.total_stations,
-            potencyKw: distributor.potency_kW,
-            initials: distributor.initials,
-            site: distributor.site,
-            createdAt: moment(distributor.created_at, 'YYYY-MM-DD').format('DD/MM/YYYY'),
-        });
-    
-    }
+    }, [getDistributor]);
 
     return (
         <>

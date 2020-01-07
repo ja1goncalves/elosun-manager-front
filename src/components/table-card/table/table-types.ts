@@ -6,7 +6,6 @@ export type TableComponentProps = {
     cellClicked?: (...params: any) => void;
     onTableRequisition?: (response: any) => void;
     customReqParams?: any;
-    pathToList?: string[];
 };
 
 export type TypeSelectedPagination = {

@@ -3,7 +3,7 @@ import { StyledCard } from '../page-card';
 import { TableComponent } from './table';
 import { TableCardComponentProps } from './table-card-types';
 
-export default ({ className, columnDefs, service, listName, cellClicked, customReqParams, onTableRequisition, pathToList }: TableCardComponentProps) => {
+export default ({ className, columnDefs, service, listName, cellClicked, customReqParams, onTableRequisition }: TableCardComponentProps) => {
     return (
         <StyledCard className={`text-secondary ${className}`}>
             <div className="row w-100">
@@ -17,7 +17,6 @@ export default ({ className, columnDefs, service, listName, cellClicked, customR
                     cellClicked={cellClicked}
                     customReqParams={customReqParams}
                     onTableRequisition={onTableRequisition}
-                    pathToList={pathToList}
                 />
             </div>
         </StyledCard>
