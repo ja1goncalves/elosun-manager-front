@@ -6,6 +6,10 @@ export const StyledCard = styled.div`
     padding: 20px;
     font-size: 0.8rem;
 
+    h2 {
+        font-size: 1.3rem;
+    }
+
     > * {
         margin-right: 0;
         margin-left: 0;

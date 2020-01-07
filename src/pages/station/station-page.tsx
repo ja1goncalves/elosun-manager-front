@@ -5,6 +5,7 @@ import { queryStringToObject } from '../../utils/app.utils';
 import moment from 'moment';
 import { StyledCard } from '../../components/page-card';
 import { IDistributorData } from './station-types';
+import { StyledDistributorInfoContainer } from './station-styles';
 
 export default () => {
     
@@ -21,7 +22,7 @@ export default () => {
     const columnDefs = [
         { headerName: 'Nome', field: 'name' },
         { headerName: 'Suporte', field: 'holder' },
-        { headerName: 'Potência (Kw)', field: 'potency_kw' },
+        { headerName: 'Potência (Kw)', field: 'potency_kW' },
         { headerName: 'Subgrupo de', field: 'subgroup' },
         { headerName: 'Criado em', field: 'created_at', cellRenderer(ev: any) {
             
@@ -51,20 +52,22 @@ export default () => {
 
         if (queryString) {
             setDistributorId(queryString.id);
+            getDistributor(queryString.id);
         }
 
     }, []);
 
-    const onTableRequisition = (response: any) => {
-        console.log('response: ', response);
+    const getDistributor = async (distributorId: string) => {
+
+        const distributor = await stationService.getDistributorData(distributorId);
 
         setDistributorData({
-            name: response.name,
-            totalStations: response.total_stations,
-            potencyKw: response.potency_kw,
-            initials: response.initials,
-            site: response.site,
-            createdAt: moment(response.created_at, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+            name: distributor.name,
+            totalStations: distributor.total_stations,
+            potencyKw: distributor.potency_kW,
+            initials: distributor.initials,
+            site: distributor.site,
+            createdAt: moment(distributor.created_at, 'YYYY-MM-DD').format('DD/MM/YYYY'),
         });
     
     }
@@ -76,26 +79,45 @@ export default () => {
                     <h2>Informações do distribuidor</h2>
                     <hr />
                 </header>
-                <div className="col-12">
-                    <p>Nome: {distributorData.name}</p>
-                    <p>Iniciais: {distributorData.initials}</p>
-                    <p>Potência (Kw): {distributorData.potencyKw}</p>
-                    <p>Site: {distributorData.site ?
-                        <a rel="noopener noreferencer" href={distributorData.site} target="_blank">Ir ao site</a> :
-                        'Não há site'}
-                    </p>
-                    <p>Total de estações: {distributorData.totalStations}</p>
-                    <p>Data de criação: {distributorData.createdAt}</p>
-                </div>
+                <StyledDistributorInfoContainer className="col-12">
+                    <div>
+                        <p>Nome:</p>
+                        <p>{distributorData.name}</p>
+                    </div>
+                    <div>
+                        <p>Iniciais:</p>
+                        <p>{distributorData.initials}</p>
+                    </div>
+                    <div>
+                        <p>Potência total (Kw):</p>
+                        <p>{distributorData.potencyKw}</p>
+                    </div>
+                    <div>
+                        <p>Site:</p>
+                        <p>
+                            {distributorData.site ?
+                            <a rel="noopener noreferrer" href={distributorData.site} target="_blank">Ir ao site</a> :
+                            'Não há site'}
+                        </p>
+                    </div>
+                    <div>
+                        <p>Total de estações:</p>
+                        <p>{distributorData.totalStations}</p>
+                    </div>
+                    <div>
+                        <p>Data de criação:</p>
+                        <p>{distributorData.createdAt}</p>
+                    </div>
+                </StyledDistributorInfoContainer>
             </StyledCard>
             <TableCardComponent
                 service={stationService}
                 columnDefs={columnDefs}
                 customReqParams={distributorId}
                 className={'row w-100'}
-                listName={'estações'}
-                onTableRequisition={onTableRequisition}
-                pathToList={['electric_stations']} />
+                listName={'estações'} />
+                {/* onTableRequisition={onTableRequisition} */}
+                {/* pathToList={['electric_stations']} */}
         </>
     )
 }
