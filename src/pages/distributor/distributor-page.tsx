@@ -1,8 +1,13 @@
 import React from 'react';
+
 import { DistributorService } from '../../services/distributor';
 import { TableCardComponent } from '../../components/table-card';
+import { useHistory } from 'react-router-dom';
 
 export default () => {
+
+    const history = useHistory();
+
     const columnDefs = [
         { headerName: 'Nome', field: 'name' },
         { headerName: 'Sigla', field: 'initials' },
@@ -10,11 +15,21 @@ export default () => {
         { headerName: 'Potência (kW)', field: 'potency_kW' },
     ];
 
+    const cellClicked = (event: any) => {
+        const { data: { id, name } } = event;
+
+        history.push({
+            pathname: 'distributors/stations',
+            search: `?id=${id}&name=${name}`,
+        })
+    }
+
     return (
         <TableCardComponent
             service={new DistributorService()}
             columnDefs={columnDefs}
             className={'row w-100'}
-            listName={'fornecedores'} />
+            listName={'fornecedores'}
+            cellClicked={cellClicked} />
     )
 }

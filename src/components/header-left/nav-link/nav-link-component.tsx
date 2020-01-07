@@ -10,8 +10,10 @@ export default ({ routeName, toUrl, icon, setShowSidebar }: NavLinkComponentProp
             className="w-100 h-100"
             onClick={() => setShowSidebar && setShowSidebar(false)}
             to={toUrl}>
-            <FontAwesomeIcon className="mr-3" icon={icon} />
-            {routeName}
+                <div className="sidebar-icon-container">
+                    <FontAwesomeIcon className="mr-3" icon={icon} />
+                </div>
+                {routeName}
         </StyledNavLink>
     </li>
 )
