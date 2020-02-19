@@ -1,5 +1,5 @@
 import React from 'react';
-import { faSolarPanel, faLightbulb, faSeedling, faUser, faLayerGroup, faMoneyBillWave, faBurn } from '@fortawesome/free-solid-svg-icons';
+import { faSolarPanel, faLightbulb, faSeedling, faUser, faMoneyBillWave, faHome } from '@fortawesome/free-solid-svg-icons';
 import { NavLinkComponent } from '../../header-left/nav-link';
 import { NavMenuProps } from './nav-menu-types';
 
@@ -9,7 +9,7 @@ export default ({ setShowSidebar }: NavMenuProps) => {
             <NavLinkComponent
                 routeName="Dashboard"
                 toUrl="/dashboard"
-                icon={faUser}
+                icon={faHome}
                 setShowSidebar={setShowSidebar}
             />
             <NavLinkComponent
@@ -19,35 +19,50 @@ export default ({ setShowSidebar }: NavMenuProps) => {
                 setShowSidebar={setShowSidebar}
             />
             <NavLinkComponent
-                routeName="Anael"
-                toUrl="/anael"
-                icon={faBurn}
+                routeName="Lead Clientes"
+                toUrl="/lead-purchasers"
+                icon={faLightbulb}
                 setShowSidebar={setShowSidebar}
             />
             <NavLinkComponent
-                routeName="Compradores"
+                routeName="Lead Fornecedores"
+                toUrl="/lead-sellers"
+                icon={faSolarPanel}
+                setShowSidebar={setShowSidebar}
+            />
+            <NavLinkComponent
+                routeName="Clientes"
                 toUrl="/purchasers"
                 icon={faLightbulb}
                 setShowSidebar={setShowSidebar}
             />
             <NavLinkComponent
-                routeName="Vendedores"
+                routeName="Fornecedores"
                 toUrl="/sellers"
                 icon={faSolarPanel}
                 setShowSidebar={setShowSidebar}
             />
-            <NavLinkComponent
-                routeName="Estoque"
-                toUrl="/stocks"
-                icon={faLayerGroup}
+
+            {/* <NavLinkComponent
+                routeName="ANEEL"
+                toUrl="/aneel"
+                icon={faBurn}
                 setShowSidebar={setShowSidebar}
-            />
+            /> */}
             <NavLinkComponent
                 routeName="Pagamentos"
                 toUrl="/orders"
                 icon={faMoneyBillWave}
                 setShowSidebar={setShowSidebar}
             />
+
+            <NavLinkComponent
+                routeName="Usuários"
+                toUrl="/users"
+                icon={faUser}
+                setShowSidebar={setShowSidebar}
+            />
+            
         </ul>
     )
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { addAuthToken } from '../../utils/axios-interceptors.utils';
 import { ITableData, PaginateDatabaTable, TableDataParams } from '../../utils/app-models.utils';
 
-class UserService implements ITableData {
+class LeadPurchaserService implements ITableData {
     private readonly http = axios.create({
         baseURL: process.env.REACT_APP_API_URL,
       })
@@ -13,23 +13,23 @@ class UserService implements ITableData {
 
     async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
         if(custom.buscar === true){
-            return this.http.post(`/admin/users/search` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
+            return this.http.post(`/admin/clients/lead/search` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
         }else{
-            return this.http.get(`/admin/users` + (page ? `?page=${page}` : '')).then(res => res.data);
+            return this.http.get(`/admin/clients/lead` + (page ? `?page=${page}` : '')).then(res => res.data.data);
         }
     }
 }
 
-let userService: UserService | null = null;
+let leadPurchaserService: LeadPurchaserService | null = null;
 
 export default (() => {
 
     const getInstance = () => {
 
-        if (!userService)
-        userService = new UserService();
+        if (!leadPurchaserService)
+        leadPurchaserService = new LeadPurchaserService();
 
-        return userService;
+        return leadPurchaserService;
 
     }
 

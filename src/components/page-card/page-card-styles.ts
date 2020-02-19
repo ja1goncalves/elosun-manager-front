@@ -14,4 +14,22 @@ export const StyledCard = styled.div`
         margin-right: 0;
         margin-left: 0;
     }
+
+    .pesquisar {
+        border: thin solid #aaa;
+        border-radius: 5px;
+        padding: 3px 6px;
+        width: 250px;
+        margin-left: 5px;
+    }
+
+    .enviar {
+    padding: 3px 20px;
+    margin-left: 5px;
+    background-color: #1B4965;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    }
 `;

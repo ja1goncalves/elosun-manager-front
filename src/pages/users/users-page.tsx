@@ -60,7 +60,7 @@ export default () => {
                 columnDefs={columnDefs}
                 customReqParams={userData}                
                 className={'row w-100'}
-                listName={'Usuário'} />
+                listName={'usuários'} />
         </>
 
     )

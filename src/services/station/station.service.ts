@@ -22,10 +22,12 @@ class StationService implements ITableData {
      *  - custom é o id do distribuidor
      */
     async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
-        if (page)
-            return this.http.get(`/admin/stations?distributor_id=${custom}&page=${page}`).then(res => res.data);
-        else
-            return this.http.get(`/admin/stations?distributor_id=${custom}`).then(res => res.data);
+        console.log(custom)
+        if(custom.buscar === true){
+            return this.http.post(`/admin/stations/search?id=${custom.id}` + (page ? `&page=${page}` : ''), custom).then(res => res.data);
+        }else{
+            return this.http.get(`/admin/stations?distributor_id=${custom.id}` + (page ? `&page=${page}` : '')).then(res => res.data.data);
+        }
     }
 }
 

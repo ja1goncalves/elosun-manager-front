@@ -19,7 +19,7 @@ export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequ
     useEffect(() => {
         (async () => {
             const tableInfo = await service.tableData({ page, custom: customReqParams });
-            
+            console.log(tableInfo)
             if (onTableRequisition)
                 onTableRequisition(tableInfo);
 
@@ -45,7 +45,7 @@ export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequ
 
     return (
         <>
-            <div className="ag-theme-balham" style={ {height: '300px', width: '100%'} }>
+            <div className="ag-theme-balham" style={ {height: '500px', width: '100%'} }>
                 <AgGridReact
                     defaultColDef={{ resizable: true }}
                     columnDefs={columnDefs}

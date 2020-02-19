@@ -2,9 +2,9 @@ import axios from 'axios';
 import { addAuthToken } from '../../utils/axios-interceptors.utils';
 import { ITableData, PaginateDatabaTable, TableDataParams } from '../../utils/app-models.utils';
 
-export default class SellerService implements ITableData {
+class SellerService implements ITableData {
     private readonly http = axios.create({
-        baseURL: process.env.REACT_APP_ELOSUN_API_URL,
+        baseURL: process.env.REACT_APP_API_URL,
     });
 
     constructor() {
@@ -12,10 +12,31 @@ export default class SellerService implements ITableData {
     }
 
 
-    async tableData({ page }: TableDataParams): Promise<PaginateDatabaTable> {
-        if (page)
-            return this.http.get(`/admin/providers?page=${page}`).then(res => res.data);
-        else
-            return this.http.get('/admin/providers').then(res => res.data);
+    async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
+        if(custom.buscar === true){
+            return this.http.post(`/admin/providers/search` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
+        }else{
+            return this.http.get(`/admin/providers` + (page ? `?page=${page}` : '')).then(res => res.data);
+        }
+
     }
 }
+
+let sellerService: SellerService | null = null;
+
+export default (() => {
+
+    const getInstance = () => {
+
+        if (!sellerService)
+        sellerService = new SellerService();
+
+        return sellerService;
+
+    }
+
+    return {
+        getInstance,
+    }
+
+})()
