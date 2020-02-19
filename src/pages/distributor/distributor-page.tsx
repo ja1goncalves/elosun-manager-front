@@ -4,7 +4,8 @@ import { DistributorService } from '../../services/distributor';
 import { TableCardComponent } from '../../components/table-card';
 import { useHistory } from 'react-router-dom';
 import { StyledCard } from '../../components/page-card';
-import { FaSearch } from "react-icons/fa";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
 
@@ -74,7 +75,7 @@ export default () => {
                         </div>
                     </div>
                     <div className="col">
-                        <button className="btn btn-primary">Pesquisar <FaSearch /></button>
+                        <button className="btn btn-primary">Pesquisar <FontAwesomeIcon icon={faSearch} /></button>
                     </div>
                 </form>
             </StyledCard>

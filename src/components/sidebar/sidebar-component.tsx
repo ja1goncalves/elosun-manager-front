@@ -59,7 +59,7 @@ export default () => {
                 <nav className="container-fluid">
                     <ul className="row d-flex justify-content-center">
                         <li className="row w-100 d-flex justify-content-start align-items-center flex-row p-2 mx-0" onClick={logoffUser}>
-                            <FontAwesomeIcon className="mr-3" icon={faSignOutAlt} /> Sair
+                            <FontAwesomeIcon icon={faSignOutAlt} /> Sair
                         </li>
                     </ul>
                 </nav>
