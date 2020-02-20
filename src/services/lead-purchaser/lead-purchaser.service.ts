@@ -12,11 +12,7 @@ class LeadPurchaserService implements ITableData {
     }
 
     async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
-        if(custom.buscar === true){
-            return this.http.post(`/admin/clients/lead/search` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
-        }else{
-            return this.http.get(`/admin/clients/lead` + (page ? `?page=${page}` : '')).then(res => res.data.data);
-        }
+        return this.http.post(`/admin/clients` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
     }
 }
 

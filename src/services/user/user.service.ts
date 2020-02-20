@@ -12,11 +12,7 @@ class UserService implements ITableData {
     }
 
     async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
-        if(custom.buscar === true){
-            return this.http.post(`/admin/users/search` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
-        }else{
-            return this.http.get(`/admin/users` + (page ? `?page=${page}` : '')).then(res => res.data);
-        }
+        return this.http.post(`/admin/users` + (page ? `?page=${page}` : ''), custom).then(res => res.data);
     }
 }
 

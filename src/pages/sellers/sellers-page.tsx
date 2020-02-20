@@ -13,6 +13,20 @@ export default () => {
         { headerName: 'Documento legal', field: 'cpf_cnpj' },
         { headerName: 'Celular', field: 'cellphone' },
         { headerName: 'Código do comprador', field: 'number' },
+        { headerName: 'Gasto Mensal de Energia', field: 'orders.0.start_watts',
+            cellRenderer(ev: any) {
+                const startWatts = ev.getValue('orders.0.start_watts');
+                const endWatts = ev.getValue('orders.0.end_watts');
+
+                if(startWatts === 2500){
+                    return "Mais de 2500kw";
+                }else if(startWatts === 0){
+                    return "Até 500kw";
+                }else{
+                    return startWatts + "kw - " + endWatts + "kw"
+                }
+            }
+        },
         { headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
             return moment(created_at).format('DD/MM/YYYY H:m:s');
         } },
@@ -31,7 +45,6 @@ export default () => {
     const onSubmit = (e: any) => {
         setSellerData({
             ...sellerData,
-            buscar: true,
             formInfo
         })
         e.preventDefault();
@@ -63,6 +76,25 @@ export default () => {
                         <div className="form-group col-3">
                             <label htmlFor="cellphone">Telefone:</label>
                             <input type="number" className="form-control form-control-sm" onChange={onChange("cellphone")} name="cellphone" id="cellphone" />
+                        </div>
+                        <div className="form-group col-3">
+                            <label htmlFor="startWatts">Potência Mínima (kW):</label>
+                            <input type="text" className="form-control form-control-sm" onChange={onChange("startWatts")} name="startWatts" id="startWatts" />
+                        </div>
+                        <div className="form-group col-3">
+                            <label htmlFor="endWatts">Potência Máxima (kW):</label>
+                            <input type="text" className="form-control form-control-sm" onChange={onChange("endWatts")} name="endWatts" id="endWatts" />
+                        </div>
+                        <div className="form-group col-3">
+                            <label htmlFor="orderStatusId">Status da Ordem:</label>
+                            <select className="form-control form-control-sm" id="orderStatusId" name="orderStatusId" onChange={onChange("orderStatusId")}>
+                                <option value="" selected>Todos</option>
+                                <option value="1">Indefinido</option>
+                                <option value="2">Cadastrado</option>
+                                <option value="3">Em análise</option>
+                                <option value="4">A transferir</option>
+                                <option value="5">Transferido</option>
+                            </select>
                         </div>
                     </div>
                     <div className="col">

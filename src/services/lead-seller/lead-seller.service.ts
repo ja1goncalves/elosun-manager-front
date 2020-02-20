@@ -13,11 +13,7 @@ class LeadSellerService implements ITableData {
 
 
     async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
-        if(custom.buscar === true){
-            return this.http.post(`/admin/providers/lead/search` + (page ? `?page=${page}`: ''), custom).then(res => res.data);
-        }else{
-            return this.http.get(`/admin/providers/lead` + (page ? `?page=${page}`: '')).then(res => res.data.data);
-        }
+        return this.http.post(`/admin/providers` + (page ? `?page=${page}`: ''), custom).then(res => res.data);
     }
     
 }

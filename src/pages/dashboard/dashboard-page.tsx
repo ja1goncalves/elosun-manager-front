@@ -24,7 +24,6 @@ export default () => {
     const onSubmit = (e: any) => {
         setUserData({
             ...userData,
-            buscar: true,
             formInfo
         })
         e.preventDefault();

@@ -13,16 +13,31 @@ export default () => {
         { headerName: 'Nome', field: 'name' },
         { headerName: 'Email', field: 'email' },
         { headerName: 'Telefone', field: 'cellphone' },
-        { headerName: 'Estado', field: 'state' },
-        { headerName: 'Gasto Mensal de Energia', field: ('consumo' && 'state') },
-        {
-            headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
+        { headerName: 'Estado', field: 'addresses.0.state' },
+        { headerName: 'Gasto Mensal de Energia', field: 'orders.0.start_watts',
+            cellRenderer(ev: any) {
+                const startWatts = ev.getValue('orders.0.start_watts');
+                const endWatts = ev.getValue('orders.0.end_watts');
+
+                if(startWatts === 2500){
+                    return "Mais de 2500kw";
+                }else if(startWatts === 0){
+                    return "Até 500kw";
+                }else{
+                    return startWatts + "kw - " + endWatts + "kw"
+                }
+            }
+        },
+        { headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
                 return moment(created_at).format('DD/MM/YYYY');
             }
         },
     ]
 
-    const [leadPurchaserData, setLeadPurchaserData] = useState({});
+    const [leadPurchaserData, setLeadPurchaserData] = useState({
+        lead: true,
+        formInfo: {}
+    });
     const [formInfo, setFormInfo] = useState({});
 
     const onChange = (field: string) => (evt: any) => {
@@ -35,7 +50,6 @@ export default () => {
     const onSubmit = (e: any) => {
         setLeadPurchaserData({
             ...leadPurchaserData,
-            buscar: true,
             formInfo
         })
         e.preventDefault();
@@ -69,12 +83,12 @@ export default () => {
                             <input type="text" className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state" />
                         </div>
                         <div className="form-group col-3">
-                            <label htmlFor="start_watss">Potência Mínima (kW):</label>
-                            <input type="text" className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state" />
+                            <label htmlFor="startWatts">Potência Mínima (kW):</label>
+                            <input type="text" className="form-control form-control-sm" onChange={onChange("startWatts")} name="startWatts" id="startWatts" />
                         </div>
                         <div className="form-group col-3">
-                            <label htmlFor="end_wats">Potência Máxima (kW):</label>
-                            <input type="text" className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state" />
+                            <label htmlFor="endWatts">Potência Máxima (kW):</label>
+                            <input type="text" className="form-control form-control-sm" onChange={onChange("endWatts")} name="endWatts" id="endWatts" />
                         </div>
                     </div>
                     <div className="col">

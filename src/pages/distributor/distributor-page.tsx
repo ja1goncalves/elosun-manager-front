@@ -31,7 +31,6 @@ export default () => {
     const onSubmit = (e: any) => {
         setDistributorData({
             ...distributorData,
-            buscar: true,
             formInfo
         })
         e.preventDefault();

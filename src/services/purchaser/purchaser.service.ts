@@ -12,11 +12,7 @@ class PurchaserService implements ITableData {
     }
 
     async tableData({ page, custom }: TableDataParams): Promise<PaginateDatabaTable> {
-        if(custom.buscar === true){
-            return this.http.post(`/admin/clients/search?page=${page}`, custom).then(res => res.data);
-        }else{
-            return this.http.get(`/admin/clients?page=${page}`).then(res => res.data);
-        }
+        return this.http.post(`/admin/clients?page=${page}`, custom).then(res => res.data);
     }
 }
 

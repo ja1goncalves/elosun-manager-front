@@ -49,12 +49,12 @@ export default ({ setShowSidebar }: NavMenuProps) => {
                 icon={faBurn}
                 setShowSidebar={setShowSidebar}
             /> */}
-            <NavLinkComponent
+            {/* <NavLinkComponent
                 routeName="Pagamentos"
                 toUrl="/orders"
                 icon={faMoneyBillWave}
                 setShowSidebar={setShowSidebar}
-            />
+            /> */}
 
             <NavLinkComponent
                 routeName="Usuários"

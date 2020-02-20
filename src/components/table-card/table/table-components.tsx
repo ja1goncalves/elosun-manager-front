@@ -19,7 +19,6 @@ export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequ
     useEffect(() => {
         (async () => {
             const tableInfo = await service.tableData({ page, custom: customReqParams });
-            console.log(tableInfo)
             if (onTableRequisition)
                 onTableRequisition(tableInfo);
 
