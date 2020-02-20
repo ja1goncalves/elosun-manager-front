@@ -35,7 +35,6 @@ export default () => {
     const onSubmit = (e:any) => {
         setStationData({
             ...stationData,
-            buscar : true,
             formInfo
         })
         e.preventDefault();
