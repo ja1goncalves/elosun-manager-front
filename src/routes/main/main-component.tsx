@@ -7,8 +7,13 @@ import { HeaderComponentUp } from '../../components/header-up';
 import { StyledPage } from './main-styles';
 
 import { DistributorPage } from '../../pages/distributor';
+
 import { PurchaserPage } from '../../pages/purchasers';
+import { PurchaserView } from '../../pages/purchasers/view';
+
 import { SellerPage } from '../../pages/sellers';
+import { SellerView } from '../../pages/sellers/view';
+
 import { StockPage } from '../../pages/stock';
 import { OrderPage } from '../../pages/order';
 import { AneelPage } from '../../pages/aneel';
@@ -28,8 +33,10 @@ export default () => (
                 <AuthRoute path='/aneel' component={AneelPage} redirectTo="/login" />
                 <AuthRoute path='/distributors' component={DistributorPage} redirectTo="/login" exact />
                 <AuthRoute path='/distributors/stations' component={StationPage} redirectTo="/login" />
-                <AuthRoute path='/purchasers' component={PurchaserPage} redirectTo="/login" />
-                <AuthRoute path='/sellers' component={SellerPage} redirectTo="/login" />
+                <AuthRoute path='/purchasers' exact component={PurchaserPage} redirectTo="/login" />
+                <AuthRoute path='/purchasers/:id' component={PurchaserView} redirectTo="/login" />
+                <AuthRoute path='/sellers' exact component={SellerPage} redirectTo="/login" />
+                <AuthRoute path='/sellers/:id' component={SellerView} redirectTo="/login" />                
                 <AuthRoute path='/stocks' component={StockPage} redirectTo="/login" />
                 <AuthRoute path='/orders' component={OrderPage} redirectTo="/login" />
                 <AuthRoute path='/lead-purchasers' exact component={LeadPurchaserPage} redirectTo="/login" />

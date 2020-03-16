@@ -1,44 +1,54 @@
 import React, { useState } from 'react';
 import { LeadPurchaserService } from '../../services/lead-purchaser';
 import { TableCardComponent } from '../../components/table-card';
-import moment from 'moment';
+import { stringToBrDateTime } from '../../utils/app.utils'
 import { StyledCard } from '../../components/page-card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
-
+import { brazilStates } from '../../utils/address-utils';
+import { useHistory } from 'react-router-dom';
 
 export default () => {
-    const columnDefs = [
-        { headerName: 'Nome', field: 'name' },
-        { headerName: 'Email', field: 'email' },
-        { headerName: 'Telefone', field: 'cellphone' },
-        { headerName: 'Estado', field: 'addresses.0.state' },
-        { headerName: 'Gasto Mensal de Energia', field: 'orders.0.start_watts',
-            cellRenderer(ev: any) {
-                const startWatts = ev.getValue('orders.0.start_watts');
-                const endWatts = ev.getValue('orders.0.end_watts');
-
-                if(startWatts === 2500){
-                    return "Mais de 2500kw";
-                }else if(startWatts === 0){
-                    return "Até 500kw";
-                }else{
-                    return startWatts + "kw - " + endWatts + "kw"
-                }
-            }
-        },
-        { headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
-                return moment(created_at).format('DD/MM/YYYY');
-            }
-        },
-    ]
-
+    const history = useHistory()    
     const [leadPurchaserData, setLeadPurchaserData] = useState({
         lead: true,
         formInfo: {}
     });
     const [formInfo, setFormInfo] = useState({});
+    const leadPurchaserService = LeadPurchaserService.getInstance();
+
+
+    const columnDefs = [
+        { headerName: 'Nome', field: 'name' },
+        { headerName: 'Email', field: 'email' },
+        { headerName: 'Telefone', field: 'cellphone' },
+        { headerName: 'Estado', field: 'addresses.0.state' },
+        {
+            headerName: 'Gasto Mensal de Energia', field: 'orders.0.start_watts',
+            cellRenderer(ev: any) {
+                const startWatts = ev.getValue('orders.0.start_watts');
+                const endWatts = ev.getValue('orders.0.end_watts');
+
+                if (startWatts === 2500) {
+                    return "Mais de 2500kw";
+                } else if (startWatts === 0) {
+                    return "Até 500kw";
+                } else {
+                    return startWatts + "kw - " + endWatts + "kw"
+                }
+            }
+        },
+        {
+            headerName: 'Última Atualização', field: 'updated_at', cellRenderer({ data: { updated_at } }: any) {
+                return stringToBrDateTime(updated_at, true);
+            }
+        },
+        {
+            headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
+                return stringToBrDateTime(created_at);
+            }
+        },
+    ]
 
     const onChange = (field: string) => (evt: any) => {
         setFormInfo({
@@ -46,7 +56,6 @@ export default () => {
             [field]: evt.target.value
         })
     }
-
     const onSubmit = (e: any) => {
         setLeadPurchaserData({
             ...leadPurchaserData,
@@ -54,14 +63,17 @@ export default () => {
         })
         e.preventDefault();
     }
+    const cellClicked = (event: any) => {
+        const { data: {id} } = event;
 
-    const leadPurchaserService = LeadPurchaserService.getInstance();
+        history.push(`purchasers/${id}`)
+    }
 
     return (
         <>
             <StyledCard className="w-100 text-secondary mb-3 row">
                 <header className="col-12">
-                    <h2>Pesquisar</h2>
+                    <h2>Pesquisar Clientes Interessados</h2>
                     <hr />
                 </header>
                 <form onSubmit={(e) => onSubmit(e)}>
@@ -79,8 +91,15 @@ export default () => {
                             <input type="number" className="form-control form-control-sm" onChange={onChange("cellphone")} name="cellphone" id="cellphone" />
                         </div>
                         <div className="form-group col-3">
-                            <label htmlFor="state">Estado:</label>
-                            <input type="text" className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state" />
+                            <div className="form-group">
+                                <label htmlFor="state">Estado</label>
+                                <select className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state">
+                                    <option value="">Todos</option>
+                                    {brazilStates.map(({ value, label }, index: number) =>
+                                        <option key={index} value={value}>{label}</option>
+                                    )}
+                                </select>
+                            </div>
                         </div>
                         <div className="form-group col-3">
                             <label htmlFor="startWatts">Potência Mínima (kW):</label>
@@ -91,7 +110,7 @@ export default () => {
                             <input type="text" className="form-control form-control-sm" onChange={onChange("endWatts")} name="endWatts" id="endWatts" />
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col-12 text-right">
                         <button className="btn btn-primary">Pesquisar <FontAwesomeIcon icon={faSearch} /></button>
                     </div>
                 </form>
@@ -101,7 +120,8 @@ export default () => {
                 columnDefs={columnDefs}
                 customReqParams={leadPurchaserData}
                 className={'row w-100'}
-                listName={'Clientes Interessados'} />
+                listName={'Clientes Interessados'}
+                cellClicked={cellClicked} />
         </>
     )
 }

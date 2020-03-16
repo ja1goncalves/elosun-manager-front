@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
 
+import moment from 'moment';
+
 export const TOKEN_COOKIE = 'token';
 export const USER_DATA_COOKIE = 'user_data';
 
@@ -13,7 +15,7 @@ export function getObjectCookie(cname: string): any {
     const cookie = getCookie(cname);
     return cookie ? JSON.parse(cookie) : undefined;
 }
-  
+
 export function getCookie(cname: string): string {
     const ca = document.cookie.split(';');
 
@@ -69,7 +71,7 @@ export function notify({ type, message }: NotifyParam) {
  * @param {string} stringWithQueryString 
  * @returns {{ [key: string]: string }} Object containing the query string
  */
-export const queryStringToObject = function(stringWithQueryString: string = ''): any | null {
+export const queryStringToObject = function (stringWithQueryString: string = ''): any | null {
     const queries = stringWithQueryString.match(/\w+=[^&]+/g);
     if (queries) {
         const obj: { [key: string]: string } = {};
@@ -80,4 +82,12 @@ export const queryStringToObject = function(stringWithQueryString: string = ''):
         return obj;
     }
     return null;
-  }
+}
+
+
+
+export const stringToBrDateTime = (dateString: string, useHour: boolean = false) => {
+    const momentDate = moment(dateString, 'YYYY-MM-DD' + (useHour ? ' H:m:s' : ''));
+
+    return momentDate.format('DD/MM/YYYY' + (useHour ? ' H:m:s' : ''));
+}

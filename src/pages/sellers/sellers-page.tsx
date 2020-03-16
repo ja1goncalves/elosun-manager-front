@@ -1,39 +1,51 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { TableCardComponent } from '../../components/table-card';
 import { SellerService } from '../../services/seller';
-import moment from 'moment';
+import { stringToBrDateTime } from '../../utils/app.utils'
+import { useHistory } from 'react-router-dom'
 import { StyledCard } from '../../components/page-card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
+    const history = useHistory()
+    const [sellerData, setSellerData] = useState({});
+    const [formInfo, setFormInfo] = useState({});
+    const sellerService = SellerService.getInstance();
+
     const columnDefs = [
         { headerName: 'Nome', field: 'name' },
         { headerName: 'Email', field: 'email' },
-        { headerName: 'Documento legal', field: 'cpf_cnpj' },
+        { headerName: 'Documento Legal', field: 'cpf_cnpj' },
         { headerName: 'Celular', field: 'cellphone' },
         { headerName: 'Código do comprador', field: 'number' },
-        { headerName: 'Gasto Mensal de Energia', field: 'orders.0.start_watts',
+        {
+            headerName: 'Produção Mensal de Energia', field: 'orders.0.start_watts',
             cellRenderer(ev: any) {
                 const startWatts = ev.getValue('orders.0.start_watts');
                 const endWatts = ev.getValue('orders.0.end_watts');
 
-                if(startWatts === 2500){
+                if (startWatts === 2500) {
                     return "Mais de 2500kw";
-                }else if(startWatts === 0){
+                } else if (startWatts === 0) {
                     return "Até 500kw";
-                }else{
+                } else {
                     return startWatts + "kw - " + endWatts + "kw"
                 }
             }
         },
-        { headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
-            return moment(created_at).format('DD/MM/YYYY H:m:s');
-        } },
+        { headerName: 'Status', field: 'orders.0.status.name' },
+        {
+            headerName: 'Última Atualização', field: 'updated_at', cellRenderer({ data: { updated_at } }: any) {
+                return stringToBrDateTime(updated_at, true);
+            }
+        },
+        {
+            headerName: 'Data de Criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
+                return stringToBrDateTime(created_at);
+            }
+        },
     ]
-
-    const [sellerData, setSellerData] = useState({});
-    const [formInfo, setFormInfo] = useState({});
 
     const onChange = (field: string) => (evt: any) => {
         setFormInfo({
@@ -41,7 +53,6 @@ export default () => {
             [field]: evt.target.value
         })
     }
-
     const onSubmit = (e: any) => {
         setSellerData({
             ...sellerData,
@@ -49,14 +60,17 @@ export default () => {
         })
         e.preventDefault();
     }
+    const cellClicked = (event: any) => {
+        const { data: { id } } = event;
 
-    const sellerService = SellerService.getInstance();
+        history.push(`sellers/${id}`)
+    }
 
     return (
         <>
             <StyledCard className="w-100 text-secondary mb-3 row">
                 <header className="col-12">
-                    <h2>Pesquisar</h2>
+                    <h2>Pesquisar Fornecedores</h2>
                     <hr />
                 </header>
                 <form onSubmit={(e) => onSubmit(e)}>
@@ -90,24 +104,25 @@ export default () => {
                             <select className="form-control form-control-sm" id="orderStatusId" name="orderStatusId" onChange={onChange("orderStatusId")}>
                                 <option value="" selected>Todos</option>
                                 <option value="1">Indefinido</option>
-                                <option value="2">Cadastrado</option>
+                                <option value="2">Cadastro</option>
                                 <option value="3">Em análise</option>
                                 <option value="4">A transferir</option>
                                 <option value="5">Transferido</option>
                             </select>
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col-12 text-right">
                         <button className="btn btn-primary">Pesquisar <FontAwesomeIcon icon={faSearch} /></button>
                     </div>
                 </form>
             </StyledCard>
-        <TableCardComponent
-            service={sellerService}
-            columnDefs={columnDefs}
-            className={'row w-100'}
-            customReqParams={sellerData}
-            listName={'Fornecedores'} />
-            </>
+            <TableCardComponent
+                service={sellerService}
+                columnDefs={columnDefs}
+                className={'row w-100'}
+                customReqParams={sellerData}
+                listName={'Fornecedores'}
+                cellClicked={cellClicked} />
+        </>
     )
 }

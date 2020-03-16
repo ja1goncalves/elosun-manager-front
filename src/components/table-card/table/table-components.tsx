@@ -7,6 +7,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-bootstrap.css';
 
 import { TableComponentProps, TypeTableComponentConfig, TypeSelectedPagination } from './table-types';
 import { StyledReactPaginateBox } from './table-styles';
@@ -44,7 +45,7 @@ export default ({ columnDefs, service, cellClicked, customReqParams, onTableRequ
 
     return (
         <>
-            <div className="ag-theme-balham" style={ {height: '500px', width: '100%'} }>
+            <div className="ag-theme-bootstrap" style={ {height: '500px', width: '100%'} }>
                 <AgGridReact
                     defaultColDef={{ resizable: true }}
                     columnDefs={columnDefs}

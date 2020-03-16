@@ -1,12 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { TableCardComponent } from '../../components/table-card';
 import { LeadSellerService } from '../../services/lead-seller';
-import moment from 'moment';
+import { stringToBrDateTime} from '../../utils/app.utils'
 import { StyledCard } from '../../components/page-card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { brazilStates } from '../../utils/address-utils';
+import { useHistory } from 'react-router-dom';
+
 
 export default () => {
+    const history = useHistory()
+    const [leadSellerData, setLeadSellerData] = useState({
+        lead: true,
+        formInfo: {}
+    });
+    const [formInfo, setFormInfo] = useState({});
+    const leadSellerService = LeadSellerService.getInstance();
+
     const columnDefs = [
         { headerName: 'Nome', field: 'name' },
         { headerName: 'Email', field: 'email' },
@@ -28,25 +39,23 @@ export default () => {
             }
         },
         {
+            headerName: 'Última Atualização', field: 'updated_at', cellRenderer({ data: { updated_at } }: any) {
+                return stringToBrDateTime(updated_at, true);
+            }
+        },
+        {
             headerName: 'Data de criação', field: 'created_at', cellRenderer({ data: { created_at } }: any) {
-                return moment(created_at).format('DD/MM/YYYY');
+                return stringToBrDateTime(created_at);
             }
         },
     ]
 
-    const [leadSellerData, setLeadSellerData] = useState({
-        lead: true,
-        formInfo: {}
-    });
-    const [formInfo, setFormInfo] = useState({});
-    
     const onChange = (field: string) => (evt: any) => {
         setFormInfo({
             ...formInfo,
             [field]: evt.target.value
         })
     }
-
     const onSubmit = (e: any) => {
         setLeadSellerData({
             ...leadSellerData,
@@ -54,15 +63,18 @@ export default () => {
         })
         e.preventDefault();
     }
+    const cellClicked = (event: any ) => {
+        const { data : { id }} = event;
 
-    const leadSellerService = LeadSellerService.getInstance();
+        history.push(`sellers/${id}`)
+    }
 
 
     return (
         <>
             <StyledCard className="w-100 text-secondary mb-3 row">
                 <header className="col-12">
-                    <h2>Pesquisar</h2>
+                    <h2>Pesquisar Fornecedores Interessados</h2>
                     <hr />
                 </header>
                 <form onSubmit={(e) => onSubmit(e)}>
@@ -80,8 +92,15 @@ export default () => {
                             <input type="number" className="form-control form-control-sm" onChange={onChange("cellphone")} name="cellphone" id="cellphone" />
                         </div>
                         <div className="form-group col-3">
-                            <label htmlFor="state">Estado:</label>
-                            <input type="text" className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state" />
+                            <div className="form-group">
+                                <label htmlFor="state">Estado</label>
+                                <select className="form-control form-control-sm" onChange={onChange("state")} name="state" id="state">
+                                    <option value="">Todos</option>
+                                    {brazilStates.map(({ value, label }, index: number) =>
+                                        <option key={index} value={value}>{label}</option>
+                                    )}
+                                </select>
+                            </div>
                         </div>
                         <div className="form-group col-3">
                             <label htmlFor="startWatts">Potência Mínima (kW):</label>
@@ -92,7 +111,7 @@ export default () => {
                             <input type="text" className="form-control form-control-sm" onChange={onChange("endWatts")} name="endWatts" id="endWatts" />
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col-12 text-right">
                         <button className="btn btn-primary">Pesquisar <FontAwesomeIcon icon={faSearch} /></button>
                     </div>
                 </form>
@@ -102,7 +121,8 @@ export default () => {
                 columnDefs={columnDefs}
                 customReqParams={leadSellerData}
                 className={'row w-100'}
-                listName={'Fornecedores Interessados'} />
+                listName={'Fornecedores Interessados'}
+                cellClicked={cellClicked} />
         </>
     )
 }
